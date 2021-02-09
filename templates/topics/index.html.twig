@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Topics index{% endblock %}
+
+{% block body %}
+    <h1>Topics index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Text</th>
+                <th>Créateur</th>
+                <th>Date</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for topic in topicsRecentz %}
+            <tr>
+                <td>{{ topic.id }}</td>
+                <td>{{ topic.title }}</td>
+                <td>{{ topic.text }}</td>
+                <td>{{ topic.users.pseudo }}</td>
+                <td>{{ topic.date ? topic.date|date('H:i d-m-Y') : '' }}</td>
+                <td>
+                    <a href="{{ path('topics_show', {'id': topic.id}) }}">show</a>
+                    <a href="{{ path('topics_edit', {'id': topic.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('topics_new') }}">Create new</a>
+{% endblock %}
