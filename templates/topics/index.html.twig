@@ -13,17 +13,38 @@
                 <th>Text</th>
                 <th>Créateur</th>
                 <th>Date</th>
+                <th>like</th>
+                <th>dislike</th>
                 <th>actions</th>
             </tr>
         </thead>
         <tbody>
-        {% for topic in topicsRecentz %}
+        {% for topic in topicsRecent %}
             <tr>
                 <td>{{ topic.id }}</td>
                 <td>{{ topic.title }}</td>
                 <td>{{ topic.text }}</td>
                 <td>{{ topic.users.pseudo }}</td>
                 <td>{{ topic.date ? topic.date|date('H:i d-m-Y') : '' }}</td>
+
+                <td><a href="{{topic.id}}/like" class="likes">
+                    <span>{{topic.likes | length}}</span>
+                    <span>likes</span> 
+                    {% if topic.likeBy(app.user)%}
+                    <span>oui</span>
+                    {% else %}
+                    <span>non</span>
+                    {% endif %}
+                </a></td>
+                <td><a href="{{topic.id}}/dislike" class="dislikes">
+                    <span>{{topic.dislikes | length}}</span>
+                    <span>dislikes</span>
+                    {% if topic.dislikeBy(app.user)%}
+                    <span>oui</span>
+                    {% else %}
+                    <span>non</span>
+                    {% endif %}
+                </a></td>
                 <td>
                     <a href="{{ path('topics_show', {'id': topic.id}) }}">show</a>
                     <a href="{{ path('topics_edit', {'id': topic.id}) }}">edit</a>

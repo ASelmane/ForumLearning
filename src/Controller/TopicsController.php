@@ -2,8 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\Dislikes;
+use App\Entity\Likes;
 use App\Entity\Topics;
 use App\Form\TopicsType;
+use App\Repository\DislikesRepository;
+use App\Repository\LikesRepository;
 use App\Repository\TopicsRepository;
 use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -24,6 +28,122 @@ class TopicsController extends AbstractController
         return $this->render('topics/index.html.twig', [
             'topicsRecent' => $topicsRepository->findBy (array (), array ('date' => 'ASC')),
         ]);
+    }
+
+    /**
+     * Permet de liker ou unliker un article
+     * 
+     *@Route("/{id}/like", name="topic_like")
+     * 
+     * @param Topics $topics
+     * @param LikesRepository $likesRepo
+     * @param DislikesRepository $dislikesRepo
+     * @return Response
+     */
+    public function like(Topics $topics, LikesRepository $likesRepo, DislikesRepository $dislikesRepo) : Response 
+    {
+        $user = $this->getUser();
+        $entityManager = $this->getDoctrine()->getManager();
+        
+        if (!$user)  return $this->json([
+            'code' => 403,
+            'message' => "Pas connecté"
+        ], 403);
+
+        if($topics->likeBy($user)){
+            $like = $likesRepo->findOneBy([
+                'topic' => $topics,
+                'user' => $user
+            ]);
+            $entityManager->remove($like);
+            $entityManager->flush();
+            
+            return $this->json([
+            'code' => 200,
+            'message' => 'like bien supprimé',
+            'likes' => $likesRepo->count(['topic' => $topics])
+            ], 200);
+        }
+
+        if ($topics->dislikeBy($user)) {
+            $dislike = $dislikesRepo->findOneBy([
+                'topic' => $topics,
+                'user' => $user
+            ]);
+            $entityManager->remove($dislike);
+            $entityManager->flush();
+        }
+
+        $like = new Likes();
+        $like-> setTopic($topics)
+             -> setUser($user);
+
+        $entityManager->persist($like);
+        $entityManager->flush();
+
+        return $this->json([
+            'code' => 200,
+            'message' => 'like bien ajouté',
+            'likes' => $likesRepo->count(['topic' => $topics])
+            ], 200);
+    }
+
+/**
+ * Permet de disliker ou undisliker un article
+ *
+ * @Route("/{id}/dislike", name="topic_dislike")
+ * 
+ * @param Topics $topics
+ * @param DislikesRepository $dislikesRepo
+ * @param LikesRepository $likesRepo
+ * @return Response
+ */
+    public function dislike(Topics $topics, DislikesRepository $dislikesRepo, LikesRepository $likesRepo ) : Response 
+    {
+        $user = $this->getUser();
+        $entityManager = $this->getDoctrine()->getManager();
+        
+        if (!$user)  return $this->json([
+            'code' => 403,
+            'message' => "Pas connecté"
+        ], 403);
+
+        if($topics->dislikeBy($user)){
+            $dislike = $dislikesRepo->findOneBy([
+                'topic' => $topics,
+                'user' => $user
+            ]);
+            $entityManager->remove($dislike);
+            $entityManager->flush();
+            
+            return $this->json([
+            'code' => 200,
+            'message' => 'dislike bien supprimé',
+            'dislikes' => $dislikesRepo->count(['topic' => $topics])
+            ], 200);
+        }
+        
+        if ($topics->likeBy($user)) {
+            $like = $likesRepo->findOneBy([
+                'topic' => $topics,
+                'user' => $user
+            ]);
+            $entityManager->remove($like);
+            $entityManager->flush();
+        }
+            
+        $dislike = new Dislikes();     
+        $dislike-> setTopic($topics)
+                -> setUser($user);
+
+        $entityManager->persist($dislike);
+        $entityManager->flush();
+
+        return $this->json([
+            'code' => 200,
+            'message' => 'dislike bien ajouté',
+            'dislikes' => $dislikesRepo->count(['topic' => $topics])
+            ], 200);
     }
 
     /**
