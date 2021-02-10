@@ -1,0 +1,74 @@
+/* Login styles */
+h1.logo {
+    color: $dark-blue;
+    font-weight: 700;
+    span.span-logo {
+        color: $cian;
+    }
+}
+
+h2.title {
+    font-weight: 500 !important;
+    font-size: 1.75rem;
+    color: $violet;
+    position: relative;
+    display: block;
+    &::before {
+        content: "";
+        border-bottom: 2px solid $violet;
+        width: 20%;
+        display: inline-flex;
+        height: 2px;
+        position: absolute;
+        top: 50%;
+        left: 0;
+    }
+    &::after {
+        content: "";
+        border-bottom: 2px solid $violet;
+        width: 20%;
+        display: inline-flex;
+        height: 2px;
+        position: absolute;
+        top: 50%;
+        right: 0;
+    }
+}
+
+@media screen and (min-width: 576px){
+    h2.title {
+        &::before {
+            content: "";
+            border-bottom: 2px solid $violet;
+            width: 30%;
+            display: inline-flex;
+            height: 2px;
+            position: absolute;
+            top: 50%;
+            left: 0;
+        }
+        &::after {
+            content: "";
+            border-bottom: 2px solid $violet;
+            width: 30%;
+            display: inline-flex;
+            height: 2px;
+            position: absolute;
+            top: 50%;
+            right: 0;
+        }
+    }
+}
+
+@media screen and (min-width: 1400px){
+    h2.title {
+        &::before {
+            content: "";
+            width: 27%;
+        }
+        &::after {
+            content: "";
+            width: 27%;
+        }
+    }
+}
