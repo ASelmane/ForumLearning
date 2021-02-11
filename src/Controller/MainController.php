@@ -17,6 +17,7 @@ class MainController extends AbstractController
         $users= $this->getUser();
         return $this->render('main/index.html.twig', [
             'user' => $users,
+            'current_menu' => true
         ]);
     }
 

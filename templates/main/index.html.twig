@@ -1,12 +1,37 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello MainController!{% endblock %}
+{% block title %}ForumLearning - Dashboard{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+<header id="main-header">
+    <div class="container-fluid">
+        <nav class="navbar navbar-expand-lg bg-white d-lg-flex align-items-lg-center">
+            <a class="navbar-brand" href="{{ path('Dashboard') }}">Forum<span class="span-logo">Learning</span></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <i class="material-icons">menu</i>
+            </button>
+          
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav ml-auto">
+                <li class="nav-item {% if current_menu is defined and current_menu == 'dashboard' %}active{% endif %}">
+                  <a class="nav-link d-inline-flex align-items-center" href="{{ path('Dashboard') }}"><i class="pt-lg-1 material-icons px-1">home</i><span class="d-lg-none">Accueil</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link d-inline-flex align-items-center" href="#"><i class="material-icons pt-lg-1 mr-lg-1 px-1">create</i><span class="d-lg-none">Mon compte</span></a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link d-inline-flex align-items-center" href="#"><i class="material-icons pt-lg-1 mr-lg-2 px-1">account_box</i><span class="d-lg-none">Mon compte</span></a>
+                </li>
+              </ul>
+              <form class="form-inline my-2 my-lg-0 mr-lg-1" id="header-search">
+                <input class="form-control mr-sm-2" type="search" placeholder="Chercher un sujet" aria-label="Search" id="search-input">
+                <button class="btn my-2 my-sm-0 btn-outline-primary d-flex align-items-center justify-content-center" type="submit"><i class="material-icons">search</i></button>
+              </form>
+              <a href="#" class="ml-2 btn btn-primary d-inline-flex align-items-center"><i class="material-icons pr-2">logout</i><span>Se déconnecter</span></a>
+            </div>
+          </nav>
+    </div>
+</header>
 
 <div class="example-wrapper">
     <h1>Hello {{ user.pseudo }}! ✅</h1>

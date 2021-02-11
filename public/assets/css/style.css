@@ -1,6 +1,7 @@
 /* Variables */
 /* Fonts */
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap");
+/* Mixins */
 /* Global styles */
 *::-moz-selection {
   background-color: #e9e8ff;
@@ -47,7 +48,7 @@ html {
 }
 
 /* Breakpoints */
-/* Login styles */
+/* Login & register styles */
 h1.logo {
   color: #1E3E4E;
   font-weight: 700;
@@ -57,7 +58,7 @@ h1.logo span.span-logo {
   color: #1EC1B6;
 }
 
-h2.title {
+h2.title, h2.title-create {
   font-weight: 500 !important;
   font-size: 1.75rem;
   color: #6C63FF;
@@ -65,7 +66,7 @@ h2.title {
   display: block;
 }
 
-h2.title::before {
+h2.title::before, h2.title-create::before {
   content: "";
   border-bottom: 2px solid #6C63FF;
   width: 20%;
@@ -78,7 +79,7 @@ h2.title::before {
   left: 0;
 }
 
-h2.title::after {
+h2.title::after, h2.title-create::after {
   content: "";
   border-bottom: 2px solid #6C63FF;
   width: 20%;
@@ -91,8 +92,17 @@ h2.title::after {
   right: 0;
 }
 
+h2.title-create {
+  color: #1EC1B6;
+}
+
+h2.title-create::before, h2.title-create::after {
+  display: none;
+  border-bottom: 2px solid #1EC1B6;
+}
+
 @media screen and (min-width: 576px) {
-  h2.title::before {
+  h2.title::before, h2.title-create::before {
     content: "";
     border-bottom: 2px solid #6C63FF;
     width: 30%;
@@ -104,7 +114,7 @@ h2.title::after {
     top: 50%;
     left: 0;
   }
-  h2.title::after {
+  h2.title::after, h2.title-create::after {
     content: "";
     border-bottom: 2px solid #6C63FF;
     width: 30%;
@@ -116,6 +126,19 @@ h2.title::after {
     top: 50%;
     right: 0;
   }
+  h2.title-create::before, h2.title-create::after {
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    width: 19%;
+    border-bottom: 2px solid #1EC1B6;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  h2.title-create::before, h2.title-create::after {
+    width: 25%;
+  }
 }
 
 @media screen and (min-width: 1400px) {
@@ -126,6 +149,9 @@ h2.title::after {
   h2.title::after {
     content: "";
     width: 27%;
+  }
+  h2.title-create::before, h2.title-create::after {
+    width: 20%;
   }
 }
 
@@ -11856,5 +11882,38 @@ a.text-dark:hover, a.text-dark:focus {
 /* Styles */
 body {
   font-family: "Poppins", sans-serif;
+}
+
+#main-header {
+  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  -webkit-transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+#main-header nav a.navbar-brand {
+  font-weight: bold;
+  color: #1E3E4E;
+}
+
+#main-header nav a.navbar-brand span.span-logo {
+  color: #6C63FF;
+}
+
+#main-header nav li a {
+  color: #1E3E4E;
+}
+
+#main-header nav li a:hover, #main-header nav li a:focus {
+  color: #6C63FF;
+}
+
+#main-header nav li.active a {
+  font-weight: 500;
+  color: #6C63FF;
+}
+
+#search-input {
+  width: 330px;
 }
 /*# sourceMappingURL=style.css.map */
