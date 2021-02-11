@@ -1,0 +1,26 @@
+@import "variables";
+@import "mixins";
+
+/* Global styles */
+*::selection {
+    background-color: lighten($violet, 26%);
+    color: #000;
+}
+
+/* Responsive typography */
+html{font-size: 16px}
+@media screen and (min-width: 576px){html{font-size: 103%}}
+@media screen and (min-width: 768px){html{font-size: 106%}}
+@media screen and (min-width: 992px){html{font-size: 109%}}
+@media screen and (min-width: 1200px){html{font-size: 111%}}
+@media screen and (min-width: 1840px){html{font-size: 114%}}
+
+/* Breakpoints */
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1400px
+);

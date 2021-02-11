@@ -10,13 +10,14 @@ use Symfony\Component\Routing\Annotation\Route;
 class MainController extends AbstractController
 {
     /**
-     * @Route("/Dashboard", name="Dashboard")
+     * @Route("/dashboard", name="dashboard")
      */
     public function index(): Response
     {
         $users= $this->getUser();
         return $this->render('main/index.html.twig', [
             'user' => $users,
+            'current_menu' => true
         ]);
     }
 
