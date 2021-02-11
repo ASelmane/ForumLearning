@@ -27,22 +27,20 @@
                 <td>{{ topic.users.pseudo }}</td>
                 <td>{{ topic.date ? topic.date|date('H:i d-m-Y') : '' }}</td>
 
-                <td><a href="{{topic.id}}/like" class="likes">
-                    <span>{{topic.likes | length}}</span>
-                    <span>likes</span> 
+                <td><a href="{{ path('topic_like', {'id' : topic.id}) }}" class="js-like">
+                    <span class="js-likes">{{topic.likes | length}}</span>
                     {% if topic.likeBy(app.user)%}
-                    <span>oui</span>
+                    <i class="fas fa-thumbs-up"></i>
                     {% else %}
-                    <span>non</span>
+                    <i class="far fa-thumbs-up"></i>
                     {% endif %}
                 </a></td>
-                <td><a href="{{topic.id}}/dislike" class="dislikes">
-                    <span>{{topic.dislikes | length}}</span>
-                    <span>dislikes</span>
+                <td><a href="{{ path('topic_dislike', {'id' : topic.id}) }}" class="js-dislike">
+                    <span class="js-dislikes">{{topic.dislikes | length}}</span>
                     {% if topic.dislikeBy(app.user)%}
-                    <span>oui</span>
+                    <i class="fas fa-thumbs-down"></i>
                     {% else %}
-                    <span>non</span>
+                    <i class="far fa-thumbs-down"></i>
                     {% endif %}
                 </a></td>
                 <td>
@@ -59,4 +57,62 @@
     </table>
 
     <a href="{{ path('topics_new') }}">Create new</a>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+
+        function onClickBtnLike(event){
+            event.preventDefault();
+
+            const url = this.href;
+            const spanCountLike = this.querySelector('span.js-likes')
+            const spanCountDislike = this.parentNode.parentNode.querySelector('span.js-dislikes');
+            const iconLike= this.querySelector('i.fa-thumbs-up');
+            const iconDislike= this.parentNode.parentNode.querySelector('i.fa-thumbs-down');
+
+            axios.get(url).then(function(response){
+                spanCountLike.textContent = response.data.likes;
+                if(iconLike.classList.contains('fas')){iconLike.classList.replace('fas', 'far');
+                } else {
+                    iconLike.classList.replace('far','fas');
+                }
+                if(iconDislike.classList.contains('fas')){
+                    spanCountDislike.textContent = response.data.dislikes;
+                    iconDislike.classList.replace('fas', 'far');
+                }
+            })
+        }
+
+        document.querySelectorAll('a.js-like').forEach(function(link){
+            link.addEventListener('click', onClickBtnLike)
+        })
+
+        function onClickBtnDislike(event){
+            event.preventDefault();
+
+            const url = this.href;
+            const spanCountDislike = this.querySelector('span.js-dislikes');
+            const spanCountLike = this.parentNode.parentNode.querySelector('span.js-likes');
+            const iconDislike= this.querySelector('i.fa-thumbs-down');
+            const iconLike= this.parentNode.parentNode.querySelector('i.fa-thumbs-up');
+
+            axios.get(url).then(function(response){
+                spanCountDislike.textContent = response.data.dislikes;
+                if(iconDislike.classList.contains('fas')){iconDislike.classList.replace('fas', 'far');
+                } else {
+                    iconDislike.classList.replace('far','fas');
+                }
+                if(iconLike.classList.contains('fas')){
+                    spanCountLike.textContent = response.data.likes;
+                    iconLike.classList.replace('fas', 'far');
+                }
+            })
+        }
+
+        document.querySelectorAll('a.js-dislike').forEach(function(link){
+            link.addEventListener('click', onClickBtnDislike)
+        })
+    </script>
 {% endblock %}

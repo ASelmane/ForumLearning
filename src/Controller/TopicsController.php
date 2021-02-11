@@ -61,7 +61,8 @@ class TopicsController extends AbstractController
             return $this->json([
             'code' => 200,
             'message' => 'like bien supprimé',
-            'likes' => $likesRepo->count(['topic' => $topics])
+            'likes' => $likesRepo->count(['topic' => $topics]),
+            'dislikes' => $dislikesRepo->count(['topic' => $topics])
             ], 200);
         }
 
@@ -84,7 +85,8 @@ class TopicsController extends AbstractController
         return $this->json([
             'code' => 200,
             'message' => 'like bien ajouté',
-            'likes' => $likesRepo->count(['topic' => $topics])
+            'likes' => $likesRepo->count(['topic' => $topics]),
+            'dislikes' => $dislikesRepo->count(['topic' => $topics])
             ], 200);
     }
 
@@ -119,6 +121,7 @@ class TopicsController extends AbstractController
             return $this->json([
             'code' => 200,
             'message' => 'dislike bien supprimé',
+            'likes' => $likesRepo->count(['topic' => $topics]),
             'dislikes' => $dislikesRepo->count(['topic' => $topics])
             ], 200);
         }
@@ -142,6 +145,7 @@ class TopicsController extends AbstractController
         return $this->json([
             'code' => 200,
             'message' => 'dislike bien ajouté',
+            'likes' => $likesRepo->count(['topic' => $topics]),
             'dislikes' => $dislikesRepo->count(['topic' => $topics])
             ], 200);
     }
