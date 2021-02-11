@@ -41,12 +41,12 @@ class Topics
     private $date;
 
     /**
-     * @ORM\OneToMany(targetEntity=Likes::class, mappedBy="topic")
+     * @ORM\OneToMany(targetEntity=Likes::class, mappedBy="topic", orphanRemoval=true)
      */
     private $likes;
 
     /**
-     * @ORM\OneToMany(targetEntity=Dislikes::class, mappedBy="topic")
+     * @ORM\OneToMany(targetEntity=Dislikes::class, mappedBy="topic", orphanRemoval=true)
      */
     private $dislikes;
 
