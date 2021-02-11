@@ -1,4 +1,4 @@
-/* Login styles */
+/* Login & register styles */
 h1.logo {
     color: $dark-blue;
     font-weight: 700;
@@ -7,7 +7,7 @@ h1.logo {
     }
 }
 
-h2.title {
+h2.title, h2.title-create {
     font-weight: 500 !important;
     font-size: 1.75rem;
     color: $violet;
@@ -35,8 +35,16 @@ h2.title {
     }
 }
 
+h2.title-create {
+    color: $cian;
+    &::before, &::after {
+        display: none;
+        border-bottom: 2px solid $cian;
+    }
+}
+
 @media screen and (min-width: 576px){
-    h2.title {
+    h2.title, h2.title-create {
         &::before {
             content: "";
             border-bottom: 2px solid $violet;
@@ -58,6 +66,21 @@ h2.title {
             right: 0;
         }
     }
+    h2.title-create {
+        &::before, &::after {
+            display: inline-flex;
+            width: 19%;
+            border-bottom: 2px solid $cian;
+        }
+    }
+}
+
+@media screen and (min-width: 1200px){
+        h2.title-create {
+            &::before, &::after {
+                width: 25%;
+        }
+    }
 }
 
 @media screen and (min-width: 1400px){
@@ -69,6 +92,11 @@ h2.title {
         &::after {
             content: "";
             width: 27%;
+        }
+    }
+    h2.title-create {
+        &::before, &::after {
+            width: 20%;
         }
     }
 }

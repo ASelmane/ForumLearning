@@ -7,3 +7,32 @@
 body {
     font-family: $font-content;
 }
+
+#main-header {
+    @include material-shadow1;
+    nav {
+        a.navbar-brand {
+            font-weight: bold;
+            color: $dark-blue;
+            span.span-logo {
+                color: $violet;
+            }
+        }
+        li {
+            a {
+                color: $dark-blue;
+                &:hover, &:focus {
+                    color: $violet;
+                }
+            }
+            &.active a {
+                font-weight: 500;
+                color: $violet;
+            }
+        }
+    }
+}
+
+#search-input {
+    width: 330px;
+}
