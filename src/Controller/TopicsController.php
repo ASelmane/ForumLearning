@@ -10,6 +10,7 @@ use App\Repository\DislikesRepository;
 use App\Repository\LikesRepository;
 use App\Repository\TopicsRepository;
 use DateTime;
+use DateTimeZone;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,8 +26,15 @@ class TopicsController extends AbstractController
      */
     public function index(TopicsRepository $topicsRepository): Response
     {
+        $topics = $topicsRepository->findBy(array(), array('date' => 'ASC'));
+        foreach ($topics as $topic) {
+            $id = $topic->getId();
+            if($topic->EditLimit()) $editLimit[$id]  = 1 ;
+            else $editLimit[$id]  = 0 ;
+        }
+
         return $this->render('topics/index.html.twig', [
-            'topicsRecent' => $topicsRepository->findBy (array (), array ('date' => 'ASC')),
+            'topicsRecent' => $topicsRepository->findBy (array (), array ('date' => 'ASC')), "editLimit"=>$editLimit
         ]);
     }
 
@@ -161,7 +169,7 @@ class TopicsController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $topic->setUsers($this->getUser());
-            $topic->setDate(new DateTime());
+            $topic->setDate(new DateTime('',new DateTimeZone('Europe/Paris')));
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($topic);
             $entityManager->flush();
@@ -190,6 +198,11 @@ class TopicsController extends AbstractController
      */
     public function edit(Request $request, Topics $topic): Response
     {
+        if(!($topic->EditLimit()) || !($topic->getUsers() === $this->getUser())){
+            $this->denyAccessUnlessGranted('ROLE_ADMIN');
+            header('Location: /topics');
+            exit();
+        }
         $form = $this->createForm(TopicsType::class, $topic);
         $form->handleRequest($request);
 
