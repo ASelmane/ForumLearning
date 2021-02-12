@@ -1,0 +1,31 @@
+{% block header %}
+<header id="main-header">
+    <div class="container-fluid">
+        <nav class="navbar navbar-expand-lg bg-white d-lg-flex align-items-lg-center">
+            <a class="navbar-brand" href="{{ path('dashboard') }}">Forum<span class="span-logo">Learning</span></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <div class="material-icons">menu</div>
+            </button>
+          
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav ml-auto">
+                <li class="nav-item {% if current_menu is defined and current_menu == 'dashboard' %}active{% endif %}">
+                  <a class="nav-link d-inline-flex align-items-center mx-xxl-2" href="{{ path('dashboard') }}"><i class="pt-lg-1 pt-xxl-0 mr-lg-1 material-icons pr-1 pr-xxl-0">home</i><span class="d-lg-none d-xxl-inline-flex">Accueil</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link d-inline-flex align-items-center mx-xxl-2" href="{{ path('topics_index') }}"><i class="material-icons pt-lg-1 pt-xxl-0 mr-lg-1 pr-1 pr-xxl-0">create</i><span class="d-lg-none d-xxl-inline-flex">Créer un Topic</span></a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link d-inline-flex align-items-center mx-xxl-2" href="#!"><i class="material-icons pt-lg-1 pt-xxl-0 mr-lg-2 pr-1 pr-xxl-0">account_box</i><span class="d-lg-none  d-xxl-inline-flex">Mon compte</span></a>
+                </li>
+              </ul>
+              <form class="form-inline my-2 my-lg-0 mr-lg-1" id="header-search">
+                <input class="form-control mr-sm-2" type="search" placeholder="Chercher un sujet" aria-label="Search" id="search-input">
+                <button class="btn-search btn my-2 my-sm-0 btn-outline-primary d-flex align-items-center justify-content-center" type="submit"><i class="material-icons">search</i></button>
+              </form>
+              <a href="{{ path('app_logout') }}" class="ml-lg-2 btn btn-primary d-inline-flex align-items-center"><i class="material-icons pr-2 pr-lg-0 pr-xl-2">logout</i><span class="d-lg-none d-xl-inline-flex">Se déconnecter</span></a>
+            </div>
+          </nav>
+    </div>
+</header>
+{% endblock %}
