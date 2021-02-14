@@ -3,6 +3,9 @@
 namespace App\Entity;
 
 use App\Repository\TopicsRepository;
+use DateInterval;
+use DateTime;
+use DateTimeZone;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -41,12 +44,12 @@ class Topics
     private $date;
 
     /**
-     * @ORM\OneToMany(targetEntity=Likes::class, mappedBy="topic")
+     * @ORM\OneToMany(targetEntity=Likes::class, mappedBy="topic", orphanRemoval=true)
      */
     private $likes;
 
     /**
-     * @ORM\OneToMany(targetEntity=Dislikes::class, mappedBy="topic")
+     * @ORM\OneToMany(targetEntity=Dislikes::class, mappedBy="topic", orphanRemoval=true)
      */
     private $dislikes;
 
@@ -193,4 +196,23 @@ class Topics
         return false;
     }
 
+/**
+ * Determine si il faut bloquer l'edition, si ça fait +30 min ou si il y a une interaction sur le topic
+ *
+ * @return boolean
+ */
+    public function EditLimit() : bool
+    {
+
+        $topicDate = $this->getDate(); 
+        $date = new DateTime();
+        $date->sub(new DateInterval('PT30M'));
+        $likes = $this->getLikes();
+        $dislikes = $this->getDislikes();
+
+        if((count($likes) === 0)  && (count($dislikes) === 0)) return true;
+        if($topicDate > $date) return true;
+
+        return false;
+    }
 }
