@@ -3,11 +3,12 @@
 {% block title %}Edit Topics{% endblock %}
 
 {% block body %}
+{% include 'main/header.html.twig' %}
     <h1>Edit Topics</h1>
 
     {{ include('topics/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('topics_index') }}">back to list</a>
-
     {{ include('topics/_delete_form.html.twig') }}
+
+    <a href="{{ path('topics_index') }}">Retour à la liste des topics</a>
 {% endblock %}

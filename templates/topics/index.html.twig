@@ -5,63 +5,70 @@
 {% block body %}
 {% include 'main/header.html.twig' %}
 
-<div class="container body-gray">
+<div class="container">
+    <div class="row mt-4">
+        <div class="col-12 text-center">
+            <h1>Liste des topics</h1>
+        </div>
 
+        <div class="col-12 my-4">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">Title</th>
+                        <th scope="col">Text</th>
+                        <th scope="col">Créateur</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Likes</th>
+                        <th scope="col">Dislikes</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for topic in topicsRecent %}
+                    <tr>
+                        <td scope="row">{{ topic.id }}</td>
+                        <td>{{ topic.title }}</td>
+                        <td>{{ topic.text }}</td>
+                        <td>{{ topic.users.pseudo }}</td>
+                        <td>{{ topic.date ? topic.date|date('H:i d-m-Y') : '' }}</td>
+        
+                        <td>
+                            <!-- Likes -->
+                            <a href="{{topic.id}}/like" class="likes d-inline-flex" data-toggle="tooltip" title="{% if topic.likeBy(app.user)%}J'ai voté{% else %}
+                            Je n'ai pas voté{% endif %}">
+                            {% if topic.likes | length > 0 %}<span class="material-icons pr-1">thumb_up</span>
+                            {% elseif topic.likes | length <= 0 %}<span class="material-icons pr-1">thumb_up_off_alt</span>{% endif %}
+                            <span class="pl-2 pr-1">{{topic.likes | length}}</span>
+                            <span>like{% if topic.likes |length > 1 %}s{% endif %}</span>
+                        </a></td>
+                        <td>
+                            <!-- Dislikes -->
+                            <a href="{{topic.id}}/dislike" class="dislikes" class="likes d-inline-flex" data-toggle="tooltip" title="{% if topic.dislikeBy(app.user)%}J'ai voté{% else %}Je n'ai pas voté{% endif %}">
+                                {% if topic.dislikes | length > 0 %}<span class="material-icons pr-1">thumb_down</span>
+                                {% elseif topic.dislikes | length <= 0 %}<span class="material-icons pr-1">thumb_down_off_alt</span>{% endif %}
+                                <span class="pl-2 pr-1">{{topic.dislikes | length}}</span>
+                                <span>dislike{% if topic.dislikes |length > 1 %}s{% endif %}</span>
+                        </a></td>
+                        <td>
+                            <a href="{{ path('topics_show', {'id': topic.id}) }}" class="btn btn-sm btn-primary">Aller voir</a>
+                            <a href="{{ path('topics_edit', {'id': topic.id}) }}" class="pl-2">Éditer</a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="5">no records found</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        
+            <a href="{{ path('topics_new') }}">Create new</a>
+        </div>
+    </div>
 </div>
-    <h1>Topics index</h1>
+    
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Title</th>
-                <th>Text</th>
-                <th>Créateur</th>
-                <th>Date</th>
-                <th>like</th>
-                <th>dislike</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for topic in topicsRecent %}
-            <tr>
-                <td>{{ topic.id }}</td>
-                <td>{{ topic.title }}</td>
-                <td>{{ topic.text }}</td>
-                <td>{{ topic.users.pseudo }}</td>
-                <td>{{ topic.date ? topic.date|date('H:i d-m-Y') : '' }}</td>
-
-                <td><a href="{{topic.id}}/like" class="likes">
-                    <span>{{topic.likes | length}}</span>
-                    <span>likes</span> 
-                    {% if topic.likeBy(app.user)%}
-                    <span>oui</span>
-                    {% else %}
-                    <span>non</span>
-                    {% endif %}
-                </a></td>
-                <td><a href="{{topic.id}}/dislike" class="dislikes">
-                    <span>{{topic.dislikes | length}}</span>
-                    <span>dislikes</span>
-                    {% if topic.dislikeBy(app.user)%}
-                    <span>oui</span>
-                    {% else %}
-                    <span>non</span>
-                    {% endif %}
-                </a></td>
-                <td>
-                    <a href="{{ path('topics_show', {'id': topic.id}) }}">show</a>
-                    <a href="{{ path('topics_edit', {'id': topic.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('topics_new') }}">Create new</a>
+    
 {% endblock %}

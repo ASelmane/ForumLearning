@@ -2,7 +2,7 @@
 @import "mixins";
 
 /* Global styles */
-*::selection {
+*::selection:not(input) {
     background-color: lighten($violet, 26%);
     color: #000;
 }

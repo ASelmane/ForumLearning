@@ -3,11 +3,11 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap");
 /* Mixins */
 /* Global styles */
-*::-moz-selection {
+*::-moz-selection:not(input) {
   background-color: #e9e8ff;
   color: #000;
 }
-*::selection {
+*::selection:not(input) {
   background-color: #e9e8ff;
   color: #000;
 }
@@ -11883,6 +11883,12 @@ a.text-dark:hover, a.text-dark:focus {
 body {
   font-family: "Poppins", sans-serif;
   background-color: #f8f8f8;
+  color: #1E3E4E;
+}
+
+body a:hover, body a:focus {
+  color: #4a3fff;
+  text-decoration: none;
 }
 
 /* Header */
@@ -11921,6 +11927,10 @@ body {
 
 #search-input {
   width: 298px;
+}
+
+.btn-search {
+  padding: 8px 10px;
 }
 
 @media screen and (min-width: 576px) {
@@ -11997,5 +12007,13 @@ body {
     -webkit-transform: scale(10);
             transform: scale(10);
   }
+}
+
+.blue {
+  color: #1EC1B6;
+}
+
+.violet {
+  color: #6C63FF;
 }
 /*# sourceMappingURL=style.css.map */

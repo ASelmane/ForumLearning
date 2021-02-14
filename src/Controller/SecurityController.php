@@ -16,6 +16,14 @@ class SecurityController extends AbstractController
     {
          if ($this->getUser()) {
              return $this->redirectToRoute('dashboard');
+
+             /* Flash message */
+             $pseudo = $this->getUser()->getPseudo();
+                $this->addFlash(
+                    'primary',
+                    'Bon retour parmis nous ' . $pseudo . ' !'
+
+            );
          }
 
         // get the login error if there is one
