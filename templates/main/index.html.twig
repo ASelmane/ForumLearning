@@ -5,18 +5,20 @@
 {% block body %}
 {% include 'main/header.html.twig' %}
 
-<div class="main-wrapper body-gray">
-
 
 <div class="container">
-    <h1>Hello {{ user.pseudo }}! ✅</h1>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/wamp64/www/ForumLearning/src/Controller/MainController.php'|file_link(0) }}">src/Controller/MainController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/wamp64/www/ForumLearning/templates/main/index.html.twig'|file_link(0) }}">templates/main/index.html.twig</a></code></li>
-    </ul>
-</div>
+    <div class="row mt-4">
+        <div class="col-12">
+            <h1>Dashboard</h1>
+            <h2 class="h5 violet">Les derniers topics</h2>
+        </div>
+    </div>
+
+    <div class="row">
+        {% include 'topics/index.html.twig' %}
+    </div>
+    
 
 </div>
 
