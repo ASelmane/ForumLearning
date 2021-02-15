@@ -12018,16 +12018,8 @@ body a:hover, body a:focus {
 }
 
 /* Form create */
-form[name=topics] {
-  width: 100%;
-}
-
-form[name=topics] > button {
-  display: -webkit-box !important;
-  display: -ms-flexbox !important;
-  display: flex !important;
-  -webkit-box-pack: end !important;
-      -ms-flex-pack: end !important;
-          justify-content: end !important;
+#create-btn {
+  display: block;
+  margin: 0 0 0 auto;
 }
 /*# sourceMappingURL=style.css.map */
