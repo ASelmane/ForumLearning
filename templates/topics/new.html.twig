@@ -4,16 +4,23 @@
 
 {% block body %}
     {% include 'main/header.html.twig' %}
+
     <div class="container">
-        <div class="row">
-            <div class="col-12 text-center">
+        <div class="row align-items-center flex-column">
+            <div class="col-12 text-center my-4">
                 <h1>Créer un nouveau topic</h1>
+            </div>
+
+            <div class="col-12 col-md-10 col-lg-8 col-xxl-6">
+                {{ include('topics/_form.html.twig') }}
+            </div>
+
+            <div class="col-12 mt-3 col-md-10 col-lg-8 col-xxl-6">
+                <a href="{{ path('topics_index') }}">🠐 Retour à la liste des topics</a>
             </div>
         </div>
     </div>
     
 
-    {{ include('topics/_form.html.twig') }}
-
-    <a href="{{ path('topics_index') }}">🠐 Retour à la liste des topics</a>
+    
 {% endblock %}

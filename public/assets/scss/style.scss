@@ -118,3 +118,12 @@ body {
   .violet {
       color: $violet;
   }
+
+  /* Form create */
+  form[name=topics] {
+      width: 100%;
+      & > button {
+        display: flex !important;
+        justify-content: end !important;
+    }
+}

@@ -12016,4 +12016,18 @@ body a:hover, body a:focus {
 .violet {
   color: #6C63FF;
 }
+
+/* Form create */
+form[name=topics] {
+  width: 100%;
+}
+
+form[name=topics] > button {
+  display: -webkit-box !important;
+  display: -ms-flexbox !important;
+  display: flex !important;
+  -webkit-box-pack: end !important;
+      -ms-flex-pack: end !important;
+          justify-content: end !important;
+}
 /*# sourceMappingURL=style.css.map */
