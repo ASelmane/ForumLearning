@@ -26,7 +26,7 @@ class TopicsController extends AbstractController
      */
     public function index(TopicsRepository $topicsRepository): Response
     {
-        $topics = $topicsRepository->findBy(array(), array('date' => 'ASC'));
+        $topics = $topicsRepository->findBy(array(), array('date' => 'DESC'));
         foreach ($topics as $topic) {
             $id = $topic->getId();
             if($topic->EditLimit()) $editLimit[$id]  = 1 ;
@@ -34,14 +34,14 @@ class TopicsController extends AbstractController
         }
 
         return $this->render('topics/index.html.twig', [
-            'topicsRecent' => $topicsRepository->findBy (array (), array ('date' => 'ASC')), "editLimit"=>$editLimit
+            'topicsRecent' => $topics, "editLimit"=>$editLimit
         ]);
     }
 
     /**
      * Permet de liker ou unliker un article
      * 
-     *@Route("/{id}/like", name="topic_like")
+     *@Route("/{id}/like", name="topics_like")
      * 
      * @param Topics $topics
      * @param LikesRepository $likesRepo
@@ -101,7 +101,7 @@ class TopicsController extends AbstractController
 /**
  * Permet de disliker ou undisliker un article
  *
- * @Route("/{id}/dislike", name="topic_dislike")
+ * @Route("/{id}/dislike", name="topics_dislike")
  * 
  * @param Topics $topics
  * @param DislikesRepository $dislikesRepo
@@ -199,9 +199,10 @@ class TopicsController extends AbstractController
     public function edit(Request $request, Topics $topic): Response
     {
         if(!($topic->EditLimit()) || !($topic->getUsers() === $this->getUser())){
-            $this->denyAccessUnlessGranted('ROLE_ADMIN');
-            header('Location: /topics');
-            exit();
+            if(!($this->isGranted('ROLE_ADMIN'))){
+                header('Location: /topics');
+                exit();
+            }
         }
         $form = $this->createForm(TopicsType::class, $topic);
         $form->handleRequest($request);

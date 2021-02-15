@@ -36,28 +36,31 @@
         
                         <td>
                             <!-- Likes -->
-                            <a href="{{topic.id}}/like" class="likes d-inline-flex js-like" data-toggle="tooltip" title="{% if topic.likeBy(app.user)%}J'ai voté{% else %}
-                            Je n'ai pas voté{% endif %}">
-                            {% if topic.likes | length > 0 %}<span class="material-icons pr-1">thumb_up</span>
-                            {% elseif topic.likes | length <= 0 %}<span class="material-icons pr-1">thumb_up_off_alt</span>{% endif %}
-                            <span class="pl-2 pr-1 js-likes">{{topic.likes | length}}</span>
-                            <span>like{% if topic.likes |length > 1 %}s{% endif %}</span>
-                        </a></td>
+                            <a href="{{ path('topics_like', {'id': topic.id}) }}" class="js-like d-inline-flex ">
+                                {% if topic.likeBy(app.user) %}
+                                    <span class="material-icons like pr-1">thumb_up</span>
+                                {% else %}
+                                    <span class="material-icons like pr-1">thumb_up_off_alt</span>
+                                {% endif %}
+                                <span class="pl-2 pr-1 js-likes">{{topic.likes | length}}</span>
+                                <span>like{% if topic.likes |length > 1 %}s{% endif %}</span>
+                            </a>
+                        </td>
                         <td>
                             <!-- Dislikes -->
-                            <a href="{{topic.id}}/dislike" class="js-dislike likes d-inline-flex" data-toggle="tooltip" title="{% if topic.dislikeBy(app.user)%}J'ai voté{% else %}Je n'ai pas voté{% endif %}">
-                                {% if topic.dislikes | length > 0 %}<span class="material-icons pr-1">thumb_down</span>
-                                {% elseif topic.dislikes | length <= 0 %}<span class="material-icons pr-1">thumb_down_off_alt</span>{% endif %}
+                            <a href="{{ path('topics_dislike', {'id': topic.id}) }}" class="js-dislike d-inline-flex">
+                                {% if topic.dislikeBy(app.user) %}
+                                    <span class="material-icons dislike pr-1">thumb_down</span>
+                                {% else %}
+                                    <span class="material-icons dislike pr-1">thumb_down_off_alt</span>
+                                {% endif %}
                                 <span class="pl-2 pr-1 js-dislikes">{{topic.dislikes | length}}</span>
                                 <span>dislike{% if topic.dislikes |length > 1 %}s{% endif %}</span>
                         </a></td>
                         <td>
-                            <a class="class="btn btn-sm btn-primary"" href="{{ path('topics_show', {'id': topic.id}) }}">{{editLimit[topic.id]}}</a>
-                            {% if is_granted('ROLE_ADMIN') %}
-                            <a class="pl-2" href="{{ path('topics_edit', {'id': topic.id}) }}" >adm</a>
-                            {% elseif (topic.users == app.user) and (editLimit[topic.id] == 1) %}
-                            <a class="pl-2" href="{{ path('topics_edit', {'id': topic.id}) }}" >user</a>
-                            {% else %}
+                            <a class="class="btn btn-sm btn-primary"" href="{{ path('topics_show', {'id': topic.id}) }}">Voir</a>
+                            {% if is_granted('ROLE_ADMIN') or ((topic.users == app.user) and (editLimit[topic.id] == 1)) %}
+                                <a href="{{ path('topics_edit', {'id': topic.id}) }}" >Modifier</a>
                             {% endif %}
                         </td>
                     </tr>
@@ -86,18 +89,19 @@
             const url = this.href;
             const spanCountLike = this.querySelector('span.js-likes')
             const spanCountDislike = this.parentNode.parentNode.querySelector('span.js-dislikes');
-            const iconLike= this.querySelector('i.fa-thumbs-up');
-            const iconDislike= this.parentNode.parentNode.querySelector('i.fa-thumbs-down');
+            const iconLike= this.querySelector('span.like');
+            const iconDislike= this.parentNode.parentNode.querySelector('span.dislike');
 
             axios.get(url).then(function(response){
                 spanCountLike.textContent = response.data.likes;
-                if(iconLike.classList.contains('fas')){iconLike.classList.replace('fas', 'far');
+                if(iconLike.innerHTML === "thumb_up_off_alt"){
+                    iconLike.innerHTML = "thumb_up";
                 } else {
-                    iconLike.classList.replace('far','fas');
+                    iconLike.innerHTML = "thumb_up_off_alt";
                 }
-                if(iconDislike.classList.contains('fas')){
+                if(iconDislike.innerHTML === "thumb_down"){
                     spanCountDislike.textContent = response.data.dislikes;
-                    iconDislike.classList.replace('fas', 'far');
+                    iconDislike.innerHTML = 'thumb_down_off_alt';
                 }
             })
         }
@@ -112,18 +116,19 @@
             const url = this.href;
             const spanCountDislike = this.querySelector('span.js-dislikes');
             const spanCountLike = this.parentNode.parentNode.querySelector('span.js-likes');
-            const iconDislike= this.querySelector('i.fa-thumbs-down');
-            const iconLike= this.parentNode.parentNode.querySelector('i.fa-thumbs-up');
+            const iconDislike= this.querySelector('span.dislike');
+            const iconLike= this.parentNode.parentNode.querySelector('span.like');
 
             axios.get(url).then(function(response){
                 spanCountDislike.textContent = response.data.dislikes;
-                if(iconDislike.classList.contains('fas')){iconDislike.classList.replace('fas', 'far');
+                if(iconDislike.innerHTML === "thumb_down_off_alt"){
+                    iconDislike.innerHTML = "thumb_down";
                 } else {
-                    iconDislike.classList.replace('far','fas');
+                    iconDislike.innerHTML = "thumb_down_off_alt";
                 }
-                if(iconLike.classList.contains('fas')){
+                if(iconLike.innerHTML === "thumb_up"){
                     spanCountLike.textContent = response.data.likes;
-                    iconLike.classList.replace('fas', 'far');
+                    iconLike.innerHTML = 'thumb_up_off_alt';
                 }
             })
         }
