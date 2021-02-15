@@ -119,11 +119,8 @@ body {
       color: $violet;
   }
 
-  /* Form create */
-  form[name=topics] {
-      width: 100%;
-      & > button {
-        display: flex !important;
-        justify-content: end !important;
-    }
+/* Form create */
+#create-btn {
+    display: block;
+    margin: 0 0 0 auto;
 }
