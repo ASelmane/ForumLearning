@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ForumLearning - Profil{% endblock %}
+
+{% block body %}
+{% include 'main/header.html.twig' %}
+
+<div class="container">
+
+    <div class="row mt-4">
+        <div class="col-12">
+            <h1>Modification de {{ app.user.pseudo }}</h1>
+            {{ form(form) }}
+        </div>
+    </div>
+    
+</div>
+{% endblock %}

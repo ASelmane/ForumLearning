@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ForumLearning - Profil{% endblock %}
+
+{% block body %}
+{% include 'main/header.html.twig' %}
+
+<div class="container">
+    <div class="row mt-4">
+        <div class="col-12">
+            <h1>Profil de {{ app.user.pseudo }}</h1>
+            <p><strong>Pseudo :</strong>{{app.user.pseudo}}</p>
+            <p><strong>Email :</strong>{{app.user.email}}</p>
+            <p><strong>Role :</strong>{% for role in app.user.roles %} {{role}}{% endfor %}</p>
+            <a href="{{ path('profil_edit')}}"> Modifier le profil</a><br>
+            <a href="{{ path('password_edit')}}"> Modifier le mot de passe</a>
+            <h2>Topics posté</h2>
+            {% for topic in app.user.topics %}
+            <a href="{{ path('topics_show', {'id': topic.id}) }}">{{topic.title}}</a><br>
+            {% endfor %}
+        </div>
+    </div>
+    
+</div>
+{% endblock %}
