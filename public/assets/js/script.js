@@ -10,7 +10,7 @@ function dismiss(){
 }
 
 $(document).ready(function(){
-    /* Dismiss alert after 3200ms */
+    /* Dismiss alert after 2800ms */
     setTimeout(dismiss, 2800);
 })
 

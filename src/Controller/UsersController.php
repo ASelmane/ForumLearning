@@ -20,7 +20,10 @@ class UsersController extends AbstractController
     */
     public function index(): Response
     {
-        return $this->render('users/index.html.twig');
+        return $this->render('users/index.html.twig', [
+            'current_menu' => 'profil' 
+            ]
+        );
     }
     
     /**

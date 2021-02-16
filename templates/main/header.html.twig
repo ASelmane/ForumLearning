@@ -12,10 +12,10 @@
                 <li class="nav-item {% if current_menu is defined and current_menu == 'dashboard' %}active{% endif %}">
                   <a class="nav-link d-inline-flex align-items-center mx-xxl-2" href="{{ path('dashboard') }}"><i class="pt-lg-1 pt-xxl-0 mr-lg-1 material-icons pr-1 pr-xxl-0">home</i><span class="d-lg-none d-xxl-inline-flex">Accueil</span></a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item {% if current_menu is defined and current_menu == 'topics_new' %}active{% endif %}">
                     <a class="nav-link d-inline-flex align-items-center mx-xxl-2" href="{{ path('topics_new') }}"><i class="material-icons pt-lg-1 pt-xxl-0 mr-lg-1 pr-1 pr-xxl-0">create</i><span class="d-lg-none d-xxl-inline-flex">Créer un Topic</span></a>
                   </li>
-                <li class="nav-item">
+                <li class="nav-item {% if current_menu is defined and current_menu == 'profil' %}active{% endif %}">
                   <a class="nav-link d-inline-flex align-items-center mx-xxl-2" href="{{ path('profil') }}"><i class="material-icons pt-lg-1 pt-xxl-0 mr-lg-2 pr-1 pr-xxl-0">account_box</i><span class="d-lg-none  d-xxl-inline-flex">Mon compte</span></a>
                 </li>
               </ul>

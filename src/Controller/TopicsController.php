@@ -182,6 +182,7 @@ class TopicsController extends AbstractController
         return $this->render('topics/new.html.twig', [
             'topic' => $topic,
             'form' => $form->createView(),
+            'current_menu' => 'topics_new'
         ]);
     }
 

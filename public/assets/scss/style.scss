@@ -119,8 +119,22 @@ body {
       color: $violet;
   }
 
-/* Form create */
-#create-btn {
-    display: block;
-    margin: 0 0 0 auto;
-}
+  /* Topic box */
+  .topic-box {
+      @include material-shadow1;
+      width: 100%; height: 100%;
+      .topic-id {
+          color: $light-gray;
+          //font-size: 2rem;
+          &::before {
+              content: "0";
+          }
+      }
+      .posted-by {
+        color: $gray;
+        font-size: 0.92rem; 
+      }
+      .topic-text {
+          font-size: 1.12rem;
+      }
+  }

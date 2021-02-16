@@ -22,7 +22,7 @@ class MainController extends AbstractController
         }
 
         return $this->render('main/index.html.twig', [
-            'topicsRecent' => $topics, "editLimit"=>$editLimit
+            'topicsRecent' => $topics, "editLimit"=>$editLimit, 'current_menu'=> 'dashboard'
         ]);
     }
 
