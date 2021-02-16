@@ -1,0 +1,9 @@
+{{ form_start(form) }}
+    {{ form_widget(form) }}
+    <div class="row">
+        <div class="col-12 d-flex justify-content-between align-items-center">
+            <a href="{{ path('topics_show', {'id' : app.request.get('id')}) }}">🠐 Retour au topic</a>
+            <button class="btn btn-primary">{{ button_label|default('Publier') }}</button>
+        </div>
+    </div>
+{{ form_end(form) }}

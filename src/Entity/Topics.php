@@ -53,10 +53,16 @@ class Topics
      */
     private $dislikes;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Commentaires::class, mappedBy="topic", orphanRemoval=true)
+     */
+    private $commentaires;
+
     public function __construct()
     {
         $this->likes = new ArrayCollection();
         $this->dislikes = new ArrayCollection();
+        $this->commentaires = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -196,23 +202,54 @@ class Topics
         return false;
     }
 
+    /**
+     * @return Collection|Commentaires[]
+     */
+    public function getCommentaires(): Collection
+    {
+        return $this->commentaires;
+    }
+
+    public function addCommentaire(Commentaires $commentaire): self
+    {
+        if (!$this->commentaires->contains($commentaire)) {
+            $this->commentaires[] = $commentaire;
+            $commentaire->setTopic($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommentaire(Commentaires $commentaire): self
+    {
+        if ($this->commentaires->removeElement($commentaire)) {
+            // set the owning side to null (unless already changed)
+            if ($commentaire->getTopic() === $this) {
+                $commentaire->setTopic(null);
+            }
+        }
+
+        return $this;
+    }
+
+    
 /**
  * Determine si il faut bloquer l'edition, si ça fait +30 min ou si il y a une interaction sur le topic
  *
  * @return boolean
  */
-    public function EditLimit() : bool
-    {
+public function EditLimit() : bool
+{
 
-        $topicDate = $this->getDate(); 
-        $date = new DateTime();
-        $date->sub(new DateInterval('PT30M'));
-        $likes = $this->getLikes();
-        $dislikes = $this->getDislikes();
+    $topicDate = $this->getDate(); 
+    $date = new DateTime();
+    $date->add(new DateInterval('PT30M'));
+    $likes = $this->getLikes();
+    $dislikes = $this->getDislikes();
+    $commentaires = $this->getCommentaires();
+    if((count($likes) === 0)  && (count($dislikes) === 0) && (count($commentaires) === 0)) return true;
+    if($topicDate > $date) return true;
 
-        if((count($likes) === 0)  && (count($dislikes) === 0)) return true;
-        if($topicDate > $date) return true;
-
-        return false;
-    }
+    return false;
+}
 }
