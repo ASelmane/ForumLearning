@@ -5,8 +5,10 @@ namespace App\Controller;
 use App\Entity\Commentaires;
 use App\Entity\Dislikes;
 use App\Entity\Likes;
+use App\Entity\Reports;
 use App\Entity\Topics;
 use App\Form\CommentairesType;
+use App\Form\ReportsType;
 use App\Form\TopicsType;
 use App\Repository\DislikesRepository;
 use App\Repository\LikesRepository;
@@ -256,6 +258,30 @@ class TopicsController extends AbstractController
 
         return $this->render('commentaires/new.html.twig', [
             'commentaire' => $commentaire,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/{id}/report", name="reports_new", methods={"GET","POST"})
+     */
+    public function report(Request $request, Topics $topic): Response
+    {
+        $report = new Reports();
+        $form = $this->createForm(ReportsType::class, $report);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $report->setUsers($this->getUser());
+            $report->setTopic($topic);
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($report);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('topics_show', array('id' => $topic->getId()));
+        }
+
+        return $this->render('reports/new.html.twig', [
+            'report' => $report,
             'form' => $form->createView(),
         ]);
     }

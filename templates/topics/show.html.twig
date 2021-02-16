@@ -97,6 +97,8 @@
     <a href="{{ path('topics_edit', {'id': topic.id}) }}">edit</a>
     <br>
     <a href="{{ path('commentaires_new', {'id': topic.id}) }}">Ajouter Commentaire</a>
+    <br>
+    <a href="{{ path('reports_new', {'id': topic.id}) }}" class="danger">Signaler</a>
 
     {{ include('topics/_delete_form.html.twig') }}
 {% endblock %}

@@ -64,12 +64,18 @@ class Users implements UserInterface
      */
     private $commentaires;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Reports::class, mappedBy="users", orphanRemoval=true)
+     */
+    private $reports;
+
     public function __construct()
     {
         $this->topics = new ArrayCollection();
         $this->likes = new ArrayCollection();
         $this->dislikes = new ArrayCollection();
         $this->commentaires = new ArrayCollection();
+        $this->reports = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -279,6 +285,36 @@ class Users implements UserInterface
             // set the owning side to null (unless already changed)
             if ($commentaire->getUser() === $this) {
                 $commentaire->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Reports[]
+     */
+    public function getReports(): Collection
+    {
+        return $this->reports;
+    }
+
+    public function addReport(Reports $report): self
+    {
+        if (!$this->reports->contains($report)) {
+            $this->reports[] = $report;
+            $report->setUsers($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReport(Reports $report): self
+    {
+        if ($this->reports->removeElement($report)) {
+            // set the owning side to null (unless already changed)
+            if ($report->getUsers() === $this) {
+                $report->setUsers(null);
             }
         }
 

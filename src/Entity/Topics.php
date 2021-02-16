@@ -58,11 +58,17 @@ class Topics
      */
     private $commentaires;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Reports::class, mappedBy="topic", orphanRemoval=true)
+     */
+    private $reports;
+
     public function __construct()
     {
         $this->likes = new ArrayCollection();
         $this->dislikes = new ArrayCollection();
         $this->commentaires = new ArrayCollection();
+        $this->reports = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -233,6 +239,37 @@ class Topics
     }
 
     
+
+/**
+ * @return Collection|Reports[]
+ */
+public function getReports(): Collection
+{
+    return $this->reports;
+}
+
+public function addReport(Reports $report): self
+{
+    if (!$this->reports->contains($report)) {
+        $this->reports[] = $report;
+        $report->setTopic($this);
+    }
+
+    return $this;
+}
+
+public function removeReport(Reports $report): self
+{
+    if ($this->reports->removeElement($report)) {
+        // set the owning side to null (unless already changed)
+        if ($report->getTopic() === $this) {
+            $report->setTopic(null);
+        }
+    }
+
+    return $this;
+}
+
 /**
  * Determine si il faut bloquer l'edition, si ça fait +30 min ou si il y a une interaction sur le topic
  *
@@ -247,7 +284,9 @@ public function EditLimit() : bool
     $likes = $this->getLikes();
     $dislikes = $this->getDislikes();
     $commentaires = $this->getCommentaires();
-    if((count($likes) === 0)  && (count($dislikes) === 0) && (count($commentaires) === 0)) return true;
+    $reports = $this->getReports();
+
+    if((count($likes) === 0)  && (count($dislikes) === 0) && (count($commentaires) === 0) && (count($reports) === 0)) return true;
     if($topicDate > $date) return true;
 
     return false;
