@@ -2,9 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Commentaires;
 use App\Entity\Dislikes;
 use App\Entity\Likes;
 use App\Entity\Topics;
+use App\Form\CommentairesType;
 use App\Form\TopicsType;
 use App\Repository\DislikesRepository;
 use App\Repository\LikesRepository;
@@ -200,8 +202,7 @@ class TopicsController extends AbstractController
     {
         if(!($topic->EditLimit()) || !($topic->getUsers() === $this->getUser())){
             if(!($this->isGranted('ROLE_ADMIN'))){
-                header('Location: /topics');
-                exit();
+                 return $this->redirectToRoute('topics_index');
             }
         }
         $form = $this->createForm(TopicsType::class, $topic);
@@ -231,5 +232,30 @@ class TopicsController extends AbstractController
         }
 
         return $this->redirectToRoute('topics_index');
+    }
+
+    /**
+     * @Route("/{id}/commentaire", name="commentaires_new", methods={"GET","POST"})
+     */
+    public function commentaire(Request $request, Topics $topic): Response
+    {
+        $commentaire = new Commentaires();
+        $form = $this->createForm(CommentairesType::class, $commentaire);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $commentaire->setUser($this->getUser());
+            $commentaire->setDate(new DateTime('',new DateTimeZone('Europe/Paris')));
+            $commentaire->setTopic($topic);
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($commentaire);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('topics_show', array('id' => $topic->getId()));
+        }
+
+        return $this->render('commentaires/new.html.twig', [
+            'commentaire' => $commentaire,
+            'form' => $form->createView(),
+        ]);
     }
 }

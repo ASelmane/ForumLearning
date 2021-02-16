@@ -30,10 +30,16 @@
             </tr>
         </tbody>
     </table>
-
+    {% for commentaire in topic.commentaires %}
+        {{ commentaire.text }} {{ commentaire.user.pseudo }} {{ commentaire.date ? commentaire.date|date('H:i Y-m-d') : '' }}
+        <br>
+    {% endfor %}
+    
     <a href="{{ path('topics_index') }}">back to list</a>
-
+    <br>
     <a href="{{ path('topics_edit', {'id': topic.id}) }}">edit</a>
+    <br>
+    <a href="{{ path('commentaires_new', {'id': topic.id}) }}">Ajouter Commentaire</a>
 
     {{ include('topics/_delete_form.html.twig') }}
 {% endblock %}
