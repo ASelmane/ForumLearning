@@ -12035,12 +12035,43 @@ body a:hover, body a:focus {
   content: "0";
 }
 
+.topic-box .topic-title {
+  line-height: 1px;
+}
+
 .topic-box .posted-by {
+  position: relative;
   color: #818181;
-  font-size: 0.92rem;
+  font-size: 0.71rem;
+  top: 0;
 }
 
 .topic-box .topic-text {
   font-size: 1.12rem;
+}
+
+.topic-text-show {
+  position: relative;
+  z-index: 0;
+}
+
+.topic-text-show::before {
+  font-family: "Material Icons";
+  content: "format_quote";
+  display: block;
+  position: absolute;
+  top: -15px;
+  left: -18px;
+  color: #E1E1E1;
+  font-size: 3rem;
+  z-index: -1;
+}
+
+.metas {
+  position: relative;
+  color: #818181;
+  display: block;
+  font-size: 0.71rem;
+  margin-top: -8px;
 }
 /*# sourceMappingURL=style.css.map */
