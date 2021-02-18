@@ -7,72 +7,74 @@
 
 <div class="container">
     <div class="row mt-4">
-        <div class="col-12 text-center">
-            <h1>Liste des topics</h1>
+        <div class="col-12">
+            <h1 class="text-uppercase">Liste des topics</h1>
+            <h2 class="h5 violet">Le dernier en haut</h2>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12 col-md-10">
+            {% for topic in topicsRecent %}
+                    <div class="row px-3 my-4 position-relative">
+                        <!--<div class="topics-id">{{ topic.id }}</div>-->
+                        <div class="topic-box card">
+                            
+                            <div class="topic-title text-uppercase card-header pt-3 px-3 d-flex align-items-center justify-content-between"><span>{{ topic.title }}</span>
+                                <div class="font-italic posted-by px-3 font-weight-normal"><span>Posté par {{ topic.users.pseudo }}</span> <span>Le {{ topic.date ? topic.date|date('d/m/Y') : '' }} à {{ topic.date ? topic.date|date('H:i') : '' }}</span></div>
+                            </div>
+                            
+                            <div class="col-12 pt-1 topic-text">
+                                {{ topic.text }}
+                            </div>
+                            <div class="row align-items-center">
+
+                            
+                            <div class="col-5 pt-4 ml-3 mt-3 mb-2">
+                                <!-- Likes -->
+                                <a href="{{ path('topics_like', {'id': topic.id}) }}" class="js-like d-inline-flex pr-4">
+                                    {% if topic.likeBy(app.user) %}
+                                        <span class="material-icons like">thumb_up</span>
+                                    {% else %}
+                                        <span class="material-icons like">thumb_up_off_alt</span>
+                                    {% endif %}
+                                    <span class="pl-2 pr-1 js-likes">{{topic.likes | length}}</span>
+                                    <span>like{% if topic.likes |length > 1 %}s{% endif %}</span>
+                                </a>
+                                
+                                <!-- Dislikes -->
+                                <a href="{{ path('topics_dislike', {'id': topic.id}) }}" class="js-dislike d-inline-flex">
+                                    {% if topic.dislikeBy(app.user) %}
+                                        <span class="material-icons dislike">thumb_down</span>
+                                    {% else %}
+                                        <span class="material-icons dislike">thumb_down_off_alt</span>
+                                    {% endif %}
+                                    <span class="pl-2 pr-1 js-dislikes">{{topic.dislikes | length}}</span>
+                                    <span>dislike{% if topic.dislikes |length > 1 %}s{% endif %}</span>
+                                </a>
+
+                            </div>
+
+                            <!-- CTA -->
+                            <div class="ml-auto text-right pr-4 mr-2">
+                                <a class="btn btn-sm btn-primary mr-2" href="{{ path('topics_show', {'id': topic.id}) }}">Voir</a>
+                            {% if is_granted('ROLE_ADMIN') or ((topic.users == app.user) and (editLimit[topic.id] == 1)) %}
+                                <a id="user-modif-btn" href="{{ path('topics_edit', {'id': topic.id}) }}" >Modifier</a>
+                            {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                {% else %}
+                    <br>
+                        <div class="text-warning">Pas d'entrée trouvée</div>
+                {% endfor %}
         </div>
 
-        <div class="col-12 my-4">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">Id</th>
-                        <th scope="col">Title</th>
-                        <th scope="col">Text</th>
-                        <th scope="col">Créateur</th>
-                        <th scope="col">Date</th>
-                        <th scope="col">Likes</th>
-                        <th scope="col">Dislikes</th>
-                        <th scope="col">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                {% for topic in topicsRecent %}
-                    <tr>
-                        <td scope="row">{{ topic.id }}</td>
-                        <td>{{ topic.title }}</td>
-                        <td>{{ topic.text }}</td>
-                        <td>{{ topic.users.pseudo }}</td>
-                        <td>{{ topic.date ? topic.date|date('H:i d-m-Y') : '' }}</td>
-        
-                        <td>
-                            <!-- Likes -->
-                            <a href="{{ path('topics_like', {'id': topic.id}) }}" class="js-like d-inline-flex ">
-                                {% if topic.likeBy(app.user) %}
-                                    <span class="material-icons like pr-1">thumb_up</span>
-                                {% else %}
-                                    <span class="material-icons like pr-1">thumb_up_off_alt</span>
-                                {% endif %}
-                                <span class="pl-2 pr-1 js-likes">{{topic.likes | length}}</span>
-                                <span>like{% if topic.likes |length > 1 %}s{% endif %}</span>
-                            </a>
-                        </td>
-                        <td>
-                            <!-- Dislikes -->
-                            <a href="{{ path('topics_dislike', {'id': topic.id}) }}" class="js-dislike d-inline-flex">
-                                {% if topic.dislikeBy(app.user) %}
-                                    <span class="material-icons dislike pr-1">thumb_down</span>
-                                {% else %}
-                                    <span class="material-icons dislike pr-1">thumb_down_off_alt</span>
-                                {% endif %}
-                                <span class="pl-2 pr-1 js-dislikes">{{topic.dislikes | length}}</span>
-                                <span>dislike{% if topic.dislikes |length > 1 %}s{% endif %}</span>
-                        </a></td>
-                        <td>
-                            <a class="class="btn btn-sm btn-primary"" href="{{ path('topics_show', {'id': topic.id}) }}">Voir</a>
-                            {% if is_granted('ROLE_ADMIN') or ((topic.users == app.user) and (editLimit[topic.id] == 1)) %}
-                                <a href="{{ path('topics_edit', {'id': topic.id}) }}" >Modifier</a>
-                            {% endif %}
-                        </td>
-                    </tr>
-                {% else %}
-                    <tr>
-                        <td colspan="5">no records found</td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-        
-            <a href="{{ path('topics_new') }}">Create new</a>
+        <div class="col-12 col-md-10">
+            <a class="btn btn-primary d-inline-flex justify-content-end" href="{{ path('topics_new') }}">Créer un nouveau topic</a>
+        </div>
+    </div>
         </div>
     </div>
 </div>

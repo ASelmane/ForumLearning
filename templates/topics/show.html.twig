@@ -57,7 +57,7 @@
     </div>
 
     {% for commentaire in topic.commentaires %}
-    <div class="row mt-5">
+    <div class="row my-5 bg-200">
         <div class="col-12">
             <h2 class="h3">Les commentaires</h2>
         </div>
@@ -66,7 +66,7 @@
         <div class="col-12 mt-3 d-flex align-items-center">
             <h4 class="violet">{{ commentaire.user.pseudo }}</h4>
             <div class="metas mt-1">
-                <span class="pl-3">{{ commentaire.date ? commentaire.date|date('Y/m/d') : '' }}</span> à 
+                <span class="pl-3">{{ commentaire.date ? commentaire.date|date('d/m/Y') : '' }}</span> à 
                 <span>{{ commentaire.date ? commentaire.date|date('H:i') : '' }}</span> 
             </div>
             

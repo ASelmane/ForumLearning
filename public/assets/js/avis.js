@@ -1,3 +1,10 @@
+function displayModifBtn(){
+    if (onClickBtnLike() || onClickBtnDislike()){
+        console.log('ok');
+        $('#user-modif-btn').addClass('d-none');
+    }
+}
+
 function onClickBtnLike(event) {
     event.preventDefault();
 
@@ -11,8 +18,10 @@ function onClickBtnLike(event) {
         spanCountLike.textContent = response.data.likes;
         if (iconLike.innerHTML === "thumb_up_off_alt") {
             iconLike.innerHTML = "thumb_up";
+            $('#user-modif-btn').addClass('d-none');
         } else {
             iconLike.innerHTML = "thumb_up_off_alt";
+            $('#user-modif-btn').removeClass('d-none');
         }
         if (iconDislike.innerHTML === "thumb_down") {
             spanCountDislike.textContent = response.data.dislikes;
@@ -38,8 +47,10 @@ function onClickBtnDislike(event) {
         spanCountDislike.textContent = response.data.dislikes;
         if (iconDislike.innerHTML === "thumb_down_off_alt") {
             iconDislike.innerHTML = "thumb_down";
+            $('#user-modif-btn').addClass('d-none');
         } else {
             iconDislike.innerHTML = "thumb_down_off_alt";
+            $('#user-modif-btn').removeClass('d-none');
         }
         if (iconLike.innerHTML === "thumb_up") {
             spanCountLike.textContent = response.data.likes;

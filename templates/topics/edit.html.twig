@@ -4,11 +4,29 @@
 
 {% block body %}
 {% include 'main/header.html.twig' %}
-    <h1>Edit Topics</h1>
 
-    {{ include('topics/_form.html.twig', {'button_label': 'Update'}) }}
+<div class="container">
+    <div class="row">
+        <div class="col-12 mt-4">
+            <h1 class="text-uppercase">Modifier le Topic</h1>
+            <h2 class="h5 violet">Éditer</h2>
+        </div>
 
-    {{ include('topics/_delete_form.html.twig') }}
+        <div class="col-12 col-md-10 col-lg-8 col-xxl-6">
+            <div class="row">
+                <div class="col-12">{{ include('topics/_form.html.twig', {'button_label': 'Mettre à jour'}) }}</div>
+                <div class="col-12 text-right d-block mt-2">{{ include('topics/_delete_form.html.twig') }}</div>
+            </div>
+            
+            
+        </div>
+    </div>
+</div>
+    
+
+    
+
+    
 
     <a href="{{ path('topics_index') }}">Retour à la liste des topics</a>
 {% endblock %}

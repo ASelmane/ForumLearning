@@ -1,18 +1,26 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Créer un nouveau Topic{% endblock %}
+{% block title %}ForumLearning - Créer un nouveau Topic{% endblock %}
 
 {% block body %}
     {% include 'main/header.html.twig' %}
 
     <div class="container">
-        <div class="row align-items-center flex-column">
-            <div class="col-12 text-center my-4">
-                <h1>Créer un nouveau topic</h1>
+        <div class="row">
+            <div class="col-12 my-4">
+                <h1 class="text-uppercase">Créer un topic</h1>
+                <h2 class="h5 violet">De quoi veux-tu parler ?</h2>
             </div>
 
             <div class="col-12 col-md-10 col-lg-8 col-xxl-6">
                 {{ include('topics/_form.html.twig') }}
+            </div>
+
+            <div class="col-xxl-6 d-xxl-flex justify-content-center d-none">
+                <div class="img-wrapper w-50">
+                    <img src="{{ asset('assets/img/img-accueil.svg') }}" alt="Forum learning">
+                </div>
+                
             </div>
         </div>
     </div>

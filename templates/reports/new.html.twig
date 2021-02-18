@@ -1,14 +1,16 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Signaler le sujet{% endblock %}
+{% block title %}Forum learning - Signaler le sujet{% endblock %}
 
 {% block body %}
     {% include 'main/header.html.twig' %}
 
     <div class="container">
-        <div class="row align-items-center flex-column">
-            <div class="col-12 text-center my-4">
-                <h1>Signaler le sujet - Topic {{app.request.get('id')}}</h1>
+        <div class="row">
+            <div class="col-12 my-4">
+                <h1 class="text-uppercase">Signaler le sujet</h1>
+                <h2 class="h5 violet">Je signale : Topic {{app.request.get('id')}}</h2>
+
             </div>
 
             <div class="col-12 col-md-10 col-lg-8 col-xxl-6">
