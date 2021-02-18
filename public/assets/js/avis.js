@@ -43,6 +43,8 @@ function onClickBtnDislike(event) {
     const iconDislike = this.querySelector('span.dislike');
     const iconLike = this.parentNode.parentNode.querySelector('span.like');
 
+
+
     axios.get(url).then(function (response) {
         spanCountDislike.textContent = response.data.dislikes;
         if (iconDislike.innerHTML === "thumb_down_off_alt") {
@@ -55,6 +57,7 @@ function onClickBtnDislike(event) {
         if (iconLike.innerHTML === "thumb_up") {
             spanCountLike.textContent = response.data.likes;
             iconLike.innerHTML = 'thumb_up_off_alt';
+            $('#user-modif-btn').addClass('d-none');
         }
     })
 }
