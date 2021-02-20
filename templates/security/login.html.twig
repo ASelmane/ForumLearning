@@ -4,12 +4,24 @@
 
 {% block body %}
 
-
+<div class="container-parallax d-none d-lg-flex">
+    <div id="scene" class="scene">
+        <div data-depth="1.00" data-depth-x="0.19" data-depth-y="-0.25">
+            <img src="{{ asset('/assets/img/browser.svg') }}">
+        </div>
+        <div data-depth-x="0.15" data-depth-y="-0.15">
+            <img src="{{ asset('/assets/img/file.svg') }}">
+        </div>
+        <div data-depth-x="-0.20" data-depth-y="-0.10">
+            <img src="{{ asset('/assets/img/person.svg') }}">
+        </div>
+    </div>
+</div>
 
 <div class="container">
     <div class="row justify-content-center mt-4">
         <!-- Img -->
-        <div class="col-12 col-md-10 col-lg-8 text-center px-4 my-4">
+        <div class="col-12 col-md-10 col-lg-8 text-center px-4 my-4 d-lg-none">
             <img src="{{ asset('assets/img/img-accueil.svg') }}" class="img-fluid" alt="ForumLearning">
         </div>
         

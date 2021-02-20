@@ -215,3 +215,31 @@ footer {
     padding: 12px 0 12px 0;
     border-top: darken($light-gray, 5%);
 }
+
+/* Parallax effect */
+.container-parallax {
+    height: 33vh;
+    margin-bottom: 100px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  #scene {
+     & > *:nth-child(1) { //browser
+      margin-top: 33px;
+      width: 280px;
+    }
+    & > *:nth-child(2) { //file
+        margin-top: 150px;
+        margin-left: 80px;
+        width: 90px;
+      }
+    & > *:nth-child(3) { //person
+      margin-top: 120px;
+      margin-left: 200px;
+      width: 120px;
+    }
+    
+  }
