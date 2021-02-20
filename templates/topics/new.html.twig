@@ -17,8 +17,18 @@
             </div>
 
             <div class="col-xxl-6 d-xxl-flex justify-content-center d-none">
-                <div class="img-wrapper w-50">
-                    <img src="{{ asset('assets/img/img-accueil.svg') }}" alt="Forum learning">
+                <div class="container-parallax d-none d-lg-flex">
+                    <div id="scene" class="scene">
+                        <div data-depth="1.00" data-depth-x="0.19" data-depth-y="-0.25">
+                            <img src="{{ asset('/assets/img/browser.svg') }}">
+                        </div>
+                        <div data-depth-x="0.15" data-depth-y="-0.15">
+                            <img src="{{ asset('/assets/img/file.svg') }}">
+                        </div>
+                        <div data-depth-x="-0.20" data-depth-y="-0.10">
+                            <img src="{{ asset('/assets/img/person.svg') }}">
+                        </div>
+                    </div>
                 </div>
                 
             </div>

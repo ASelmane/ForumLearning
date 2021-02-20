@@ -1,5 +1,9 @@
 /* Script */
 
+/* Parallax */
+var scene = document.getElementById('scene');
+var parallax = new Parallax(scene);
+
 /* Animated icon hamburger with lottie */
 const hamburger = document.getElementById('hamburger');
 let state = 'play';
