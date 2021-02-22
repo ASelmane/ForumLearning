@@ -2,11 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\Users;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Form\EditProfileType;
+use App\Repository\UsersRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
@@ -24,6 +26,30 @@ class UsersController extends AbstractController
             'current_menu' => 'profil' 
             ]
         );
+    }
+
+    /**
+     * @Route("/liste", name="profil_liste", methods={"GET"})
+     */
+    public function liste(UsersRepository $usersRepository): Response
+    {
+        return $this->render('users/liste.html.twig', [
+            'users' => $usersRepository->findAll(),
+        ]);
+    }
+
+    /**
+     * @Route("/{id}", name="profil_delete", methods={"DELETE"})
+     */
+    public function delete(Request $request, Users $users): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$users->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($users);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('profil_liste');
     }
     
     /**

@@ -25,12 +25,12 @@
                             </div>
                             
                             <div class="col-12 pt-1 topic-text">
-                                {{ topic.text }}
+                                {{ description[topic.id] }}
                             </div>
-                            <div class="row align-items-center">
+                            <div class="row align-items-center px-1 py-3">
 
                             
-                            <div class="col-5 pt-4 ml-3 mt-3 mb-2">
+                            <div class="col pt-0 ml-3 mt-3 mb-2">
                                 <!-- Likes -->
                                 <a href="{{ path('topics_like', {'id': topic.id}) }}" class="js-like d-inline-flex pr-4">
                                     {% if topic.likeBy(app.user) %}
@@ -39,7 +39,7 @@
                                         <span class="material-icons like">thumb_up_off_alt</span>
                                     {% endif %}
                                     <span class="pl-2 pr-1 js-likes">{{topic.likes | length}}</span>
-                                    <span>like{% if topic.likes |length > 1 %}s{% endif %}</span>
+                                    <span>like{% if topic.likes | length > 1 %}s{% endif %}</span>
                                 </a>
                                 
                                 <!-- Dislikes -->
@@ -50,11 +50,14 @@
                                         <span class="material-icons dislike">thumb_down_off_alt</span>
                                     {% endif %}
                                     <span class="pl-2 pr-1 js-dislikes">{{topic.dislikes | length}}</span>
-                                    <span>dislike{% if topic.dislikes |length > 1 %}s{% endif %}</span>
+                                    <span>dislike{% if topic.dislikes | length > 1 %}s{% endif %}</span>
                                 </a>
 
                             </div>
-
+                            <div class="col mt-3 mb-2 pb-1">
+                                <span class="pl-2 d-inline-flex">{{topic.commentaires | length }} commentaire{% if topic.commentaires | length > 1 %}s{% endif %}</span>
+                            </div>
+                            
                             <!-- CTA -->
                             <div class="ml-auto text-right pr-4 mr-2">
                                 <a class="btn btn-sm btn-primary mr-2" href="{{ path('topics_show', {'id': topic.id}) }}">Voir</a>

@@ -45,17 +45,17 @@ class Users implements UserInterface
     private $pseudo;
 
     /**
-     * @ORM\OneToMany(targetEntity=Topics::class, mappedBy="users")
+     * @ORM\OneToMany(targetEntity=Topics::class, mappedBy="users", orphanRemoval=true)
      */
     private $topics;
 
     /**
-     * @ORM\OneToMany(targetEntity=Likes::class, mappedBy="user")
+     * @ORM\OneToMany(targetEntity=Likes::class, mappedBy="user", orphanRemoval=true)
      */
     private $likes;
 
     /**
-     * @ORM\OneToMany(targetEntity=Dislikes::class, mappedBy="user")
+     * @ORM\OneToMany(targetEntity=Dislikes::class, mappedBy="user", orphanRemoval=true)
      */
     private $dislikes;
 

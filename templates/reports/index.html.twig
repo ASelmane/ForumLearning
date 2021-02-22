@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Reports index{% endblock %}
+
+{% block body %}
+    <h1>Reports index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Reason</th>
+                <th>Topic</th>
+                <th>Utilisateur</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for report in reports %}
+            <tr>
+                <td>{{ report.id }}</td>
+                <td>{{ report.reason }}</td>
+                <td>{{ report.topic.title }}</td>
+                <td>{{ report.users.pseudo }}</td>
+                <td>
+                    <a href="{{ path('topics_show', {'id': report.topic.id}) }}">Voir topic</a>
+                    {{ include('reports/_delete_form.html.twig') }}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

@@ -42,13 +42,17 @@
             </a>
 
             <a class="d-flex ml-auto mr-3 p-1" href="{{ path('commentaires_new', {'id': topic.id}) }}"><i class="material-icons pr-1">add</i>Ajouter un commentaire</a>
+            {% if is_granted('ROLE_ADMIN') or ((topic.users == app.user) and (editLimit == 1)) %}
             <a class="d-flex mr-3 p-1" href="{{ path('topics_edit', {'id': topic.id}) }}"><i class="material-icons pr-1">edit</i>Éditer</a>
+            {% endif %}
             <a class="d-flex text-danger p-1" href="{{ path('reports_new', {'id': topic.id}) }}" class="danger"><i class="material-icons pr-1">report</i>Signaler</a>
         </div>
 
-        <div class="col-12 d-flex justify-content-between">
+        <div class="col-12 d-flex justify-content-between px-0">
             <a href="{{ path('topics_index') }}">🠐 Retour à la liste des topics</a>
+            {% if is_granted('ROLE_ADMIN') or ((topic.users == app.user) and (editLimit == 1)) %}
             {{ include('topics/_delete_form.html.twig') }}
+            {% endif %}
         </div>
 
 
@@ -56,12 +60,12 @@
          
     </div>
 
-    {% for commentaire in topic.commentaires %}
-    <div class="row my-5 bg-200">
+    
+    <div class="row mt-5">
         <div class="col-12">
             <h2 class="h3">Les commentaires</h2>
         </div>
-        
+        {% for commentaire in topic.commentaires %}
         
         <div class="col-12 mt-3 d-flex align-items-center">
             <h4 class="violet">{{ commentaire.user.pseudo }}</h4>
@@ -75,12 +79,16 @@
         <div class="col-12 topic-text-show">
             {{ commentaire.text }} 
         </div>
-        
+        <div class="col-12 text-right border-bottom py-3">
+            {% if is_granted('ROLE_ADMIN') %}
+            {{ include('commentaires/_delete_form.html.twig') }}
+            {% endif %}
+        </div>
+        {% endfor %}
     </div>
-    {% endfor %}
+    
 </div>
-    
-    
+
    
 
     

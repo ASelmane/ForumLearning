@@ -35,12 +35,21 @@ class TopicsController extends AbstractController
             $id = $topic->getId();
             if($topic->EditLimit()) $editLimit[$id]  = 1 ;
             else $editLimit[$id]  = 0 ;
+        
+            $lg_max = 255; // nombre de caractère max
+            $description[$id] = strip_tags($topic->getText()); // On retire toutes les balises
+            if (strlen($description[$id]) > $lg_max) { 
+                $description[$id] = substr($description[$id], 0, $lg_max) ;
+                $last_space = strrpos($description[$id], " ") ;
+                $description[$id] = substr($description[$id], 0, $last_space)."..." ;
+            }
         }
 
         return $this->render('topics/index.html.twig', [
-            'topicsRecent' => $topics, "editLimit"=>$editLimit
+            'topicsRecent' => $topics, "editLimit"=>$editLimit, "description"=>$description
         ]);
-    }
+    } 
+    
 
     /**
      * Permet de liker ou unliker un article
@@ -193,8 +202,10 @@ class TopicsController extends AbstractController
      */
     public function show(Topics $topic): Response
     {
+        if($topic->EditLimit()) $editLimit  = 1 ;
+            else $editLimit  = 0 ;
         return $this->render('topics/show.html.twig', [
-            'topic' => $topic,
+            'topic' => $topic, "editLimit"=>$editLimit
         ]);
     }
 
@@ -272,6 +283,23 @@ class TopicsController extends AbstractController
             'commentaire' => $commentaire,
             'form' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @Route("/{topic}/commentaire/{id}", name="commentaires_delete", methods={"DELETE"})
+     */
+    public function deleteCommentaire(Request $request, Commentaires $commentaire, Topics $topic): Response
+    {
+        if(!($this->isGranted('ROLE_ADMIN'))){
+            return $this->redirectToRoute('topics_show', array('id' => $topic->getId()));
+       }
+        if ($this->isCsrfTokenValid('delete'.$commentaire->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($commentaire);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('topics_show', array('id' => $topic->getId()));
     }
 
     /**
