@@ -216,7 +216,7 @@ class TopicsController extends AbstractController
     {
         if(!($topic->EditLimit()) || !($topic->getUsers() === $this->getUser())){
             if(!($this->isGranted('ROLE_ADMIN'))){
-                 return $this->redirectToRoute('topics_index');
+                 return $this->redirectToRoute('dashboard');
             }
         }
         $form = $this->createForm(TopicsType::class, $topic);
@@ -231,7 +231,7 @@ class TopicsController extends AbstractController
                 'Votre sujet à été correctement édité.'
             );
 
-            return $this->redirectToRoute('topics_index');
+            return $this->redirectToRoute('topics_show', array('id' => $topic->getId()));
         }
 
         return $this->render('topics/edit.html.twig', [
