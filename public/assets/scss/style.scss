@@ -210,7 +210,7 @@ textarea.form-control {
 }
 
 footer {
-    background-color: $light-gray;
+    background-color: white;
     margin-top: 55px;
     padding: 12px 0 12px 0;
     border-top: darken($light-gray, 5%);
@@ -242,4 +242,16 @@ footer {
       width: 120px;
     }
     
+  }
+
+  #icon-success-container {
+      width: 32px;
+  }
+
+  #icon-warning-container {
+      width: 30px;
+  }
+
+  #icon-handshake-container {
+      width: 28px;
   }

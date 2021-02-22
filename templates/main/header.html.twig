@@ -36,14 +36,21 @@
             {# lire et afficher tous les messages Flash #}
             {% for label, messages in app.flashes %}
             {% for message in messages %}
+                <div class="row">
+                    <div class="col-12 col-md-10">
+                        {# utilisation des classes de Bootstrap #}
+                        <div class="d-inline-flex w-100 my-2 py-2 alert alert-{{ label }} alert-dismissible fade show mt-2" role="alert" id="flash-message">
+                            {% if (label == 'success') %}<div id="icon-success-container"></div>{% endif %}
+                            {% if (label == 'warning') %}<div id="icon-warning-container"></div>{% endif %}
+                            {% if (label == 'danger') %}<div id="icon-warning-container"></div>{% endif %}
+                            {% if (label == 'primary') %}<div id="icon-handshake-container"></div>{% endif %}
+                            
+                            <div class="ml-3">{{ message }}</div>
 
-                {# utilisation des classes de Bootstrap #}
-                <div class="alert alert-{{ label }} alert-dismissible fade show mt-2" role="alert" id="flash-message">
-                    {{ message }}
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                        </div>
+                    </div>
                 </div>
+                
 
             {% endfor %}
             {% endfor %}

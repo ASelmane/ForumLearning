@@ -41,7 +41,7 @@ class UsersController extends AbstractController
             $em->persist($user);
             $em->flush();
 
-            $this->addFlash('message', 'Profil mis à jour');
+            $this->addFlash('success', 'Profil mis à jour avec succès.');
             return $this->redirectToRoute('profil');
         }
 
@@ -66,14 +66,14 @@ class UsersController extends AbstractController
                     $new_pwd_encoded = $passwordEncoder->encodePassword($user, $new_pwd_confirm); 
                     $user->setPassword($new_pwd_encoded);
                     $em->flush();
-                    $this->addFlash('message', 'Mot de passe mis à jour');
+                    $this->addFlash('success', 'Mot de passe mis à jour');
 
                     return $this->redirectToRoute('profil');
                 }
-                else $this->addFlash('error', 'Les deux mots de passe sont différents');
+                else $this->addFlash('warning', 'Les deux mots de passe sont différents');
             } 
             else {
-                $this->addFlash('error', 'Ancien mot de passe incorrect');
+                $this->addFlash('danger', 'Ancien mot de passe incorrect');
             }
         }
         return $this->render('users/editPassword.html.twig');
