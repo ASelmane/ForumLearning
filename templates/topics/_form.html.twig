@@ -2,7 +2,11 @@
     {{ form_widget(form) }}
     <div class="row">
         <div class="col-12 d-flex justify-content-between align-items-center">
-            <a href="{{ path('topics_show', {'id' : app.request.get('id')}) }}">🠐 Retour au topic</a>
+            {% if '/topics/new' in app.request.uri %}
+                <a href="{{ path('topics_index') }}">🠐 Retour à la liste des topic</a>
+            {% else %}
+                <a href="{{ path('topics_show', {'id' : app.request.get('id')}) }}">🠐 Retour au topic</a>
+            {% endif %}
             <button class="btn btn-primary">{{ button_label|default('Publier') }}</button>
         </div>
     </div>
