@@ -214,6 +214,12 @@ class TopicsController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
+            /* Flash message */
+            $this->addFlash(
+                'success',
+                'Votre sujet à été correctement édité.'
+            );
+
             return $this->redirectToRoute('topics_index');
         }
 
@@ -233,6 +239,12 @@ class TopicsController extends AbstractController
             $entityManager->remove($topic);
             $entityManager->flush();
         }
+
+        /* Flash message */
+        $this->addFlash(
+            'success',
+            'Votre sujet à été correctement supprimé.'
+        );
 
         return $this->redirectToRoute('topics_index');
     }

@@ -7,7 +7,7 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-12 mt-4">
+        <div class="col-12 my-4">
             <h1 class="text-uppercase">Modifier le Topic</h1>
             <h2 class="h5 violet">Éditer</h2>
         </div>
@@ -20,13 +20,31 @@
             
             
         </div>
+
+        <div class="col-xxl-6 d-xxl-flex justify-content-center d-none">
+            <div class="container-parallax d-none d-lg-flex">
+                <div id="scene" class="scene">
+                    <div data-depth="1.00" data-depth-x="0.19" data-depth-y="-0.25">
+                        <img src="{{ asset('/assets/img/browser.svg') }}">
+                    </div>
+                    <div data-depth-x="0.15" data-depth-y="-0.15">
+                        <img src="{{ asset('/assets/img/file-blue.svg') }}">
+                    </div>
+                    <div data-depth-x="-0.20" data-depth-y="-0.10">
+                        <img src="{{ asset('/assets/img/person.svg') }}">
+                    </div>
+                </div>
+            </div>
+
     </div>
 </div>
-    
 
+<!-- Parallax -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/parallax/3.1.0/parallax.min.js"></script>
+<script>
+    /* Parallax */
+    var scene = document.getElementById('scene');
+    var parallax = new Parallax(scene);
+</script>
     
-
-    
-
-    <a href="{{ path('topics_index') }}">Retour à la liste des topics</a>
 {% endblock %}

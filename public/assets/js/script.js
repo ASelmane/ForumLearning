@@ -1,9 +1,5 @@
 /* Script */
 
-/* Parallax */
-var scene = document.getElementById('scene');
-var parallax = new Parallax(scene);
-
 /* Animated icon hamburger with lottie */
 const hamburger = document.getElementById('hamburger');
 let state = 'play';
@@ -19,8 +15,8 @@ var animation = bodymovin.loadAnimation({
   })
 
 $(document).ready(function(){
-    /* Dismiss alert after 2800ms */
-    setTimeout(dismiss, 2800);
+    /* Dismiss alert after 3520ms */
+    setTimeout(dismiss, 3520);
 
     /* Menu mobile */
     $('#navbarSupportedContent').on('show.bs.collapse', function(e){
@@ -52,6 +48,55 @@ $(document).ready(function(){
         $('.alert').alert('close');
     }
     
+
+    /* Icon success */
+    var successIcon = document.getElementById('icon-success-container');
+
+    var animationSuccess = bodymovin.loadAnimation({
+    //animation data
+    container: successIcon,
+    path: 'https://maxst.icons8.com/vue-static/landings/animated-icons/icons/cool/cool.json',
+    renderer: 'svg',
+    loop: false,
+    autoplay: true,
+    name: "Success",
+    
+    });
+
+    animationSuccess.setSpeed(0.45);
+
+    /* Icon warning */
+    var warningIcon = document.getElementById('icon-warning-container');
+
+    var animationWarning = bodymovin.loadAnimation({
+    //animation data
+    container: warningIcon,
+    path: 'https://maxst.icons8.com/vue-static/landings/animated-icons/icons/warning-1/warning-1.json',
+    renderer: 'svg',
+    loop: false,
+    autoplay: true,
+    name: "Warning",
+    
+    });
+
+    animationWarning.setSpeed(0.45);
+
+    /* Icon handshake */
+    var handsIcon = document.getElementById('icon-handshake-container');
+
+    var animationHandshake = bodymovin.loadAnimation({
+    //animation data
+    container: handsIcon,
+    path: 'https://maxst.icons8.com/vue-static/landings/animated-icons/icons/handshake/handshake.json',
+    renderer: 'svg',
+    loop: false,
+    autoplay: true,
+    name: "Handshake",
+    
+    });
+
+    animationHandshake.goToAndPlay(14, true);
+    animationHandshake.setSpeed(0.23);
 })
 
 
