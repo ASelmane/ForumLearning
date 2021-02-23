@@ -62,8 +62,11 @@
                             <div class="ml-auto text-right pr-4 mr-2">
                                 <a class="btn btn-sm btn-primary mr-2" href="{{ path('topics_show', {'id': topic.id}) }}">Voir</a>
                             {% if is_granted('ROLE_ADMIN') or ((topic.users == app.user) and (editLimit[topic.id] == 1)) %}
-                                <a id="user-modif-btn" href="{{ path('topics_edit', {'id': topic.id}) }}" >Modifier</a>
+                                <a class="user-modif-btn" href="{{ path('topics_edit', {'id': topic.id}) }}" >Modifier</a>
                             {% endif %}
+                            <input type="hidden" class="jsEditLimit" name="jsEditLimit" value="{{ topic.date ? topic.date|date('Y-m-d H:i') : '' }}">
+                            <input type="hidden" class="jsAdmin" name="jsAdmin" value="{% if is_granted('ROLE_ADMIN') %} 1 {% else %} 0 {% endif %} ">
+
                             </div>
                         </div>
                     </div>

@@ -10,14 +10,14 @@
     <div class="row mt-4">
         <div class="col-12">
             {% if is_granted('ROLE_ADMIN') %}
-            <h1 class="text-uppercase">Dashboard </h1><h2 class="h5 violet">Admin</h2>
+            <h1 class="text-uppercase">Dashboard </h1><h2 class="h5 violet mb-4">Admin</h2>
             <a href="{{ path('topics_index') }}" class="pr-2 ">Listes des Topics</a>
             <a href="{{ path('profil_liste') }}" class="px-2">Listes des Utilisateurs</a>
             <a href="{{ path('reports_index') }}" class="px-2">Listes des Signalements</a>
             {% else %}
             <h1 class="text-uppercase">Dashboard</h1>
             {% endif %}
-            <h2 class="h5 violet {% if is_granted('ROLE_ADMIN') %}pt-3 {% endif %}">Les derniers topics</h2>
+            <h2 class="h5 violet {% if is_granted('ROLE_ADMIN') %}pt-5 {% endif %}">Les derniers topics</h2>
         </div>
     </div>
 
@@ -25,10 +25,9 @@
         <div class="col-12 col-md-10">
             {% for topic in topicsRecent %}
                     <div class="row px-3 my-4 position-relative">
-                        <!--<div class="topics-id">{{ topic.id }}</div>-->
                         <div class="topic-box card">
                             
-                            <div class="topic-title text-uppercase card-header pt-3 px-3 d-flex align-items-center justify-content-between"><span>{{ topic.title }}</span>
+                            <div class="topic-title text-uppercase card-header pt-3 px-3 d-flex align-items-center justify-content-between"><span>{% if topic.reports | length > 0 %}<span class="material-icons d-inline-flex text-danger">fmd_bad</span> {% endif %}{{ topic.title }}</span>
                                 <div class="font-italic posted-by font-weight-normal px-3"><span>Posté par {{ topic.users.pseudo }}</span> <span>Le {{ topic.date ? topic.date|date('d/m/Y') : '' }} à {{ topic.date ? topic.date|date('H:i') : '' }}</span></div>
                             </div>
                             
@@ -69,8 +68,11 @@
                             <div class="ml-auto text-right pr-4 mr-2">
                                 <a class="btn btn-sm btn-primary mr-2" href="{{ path('topics_show', {'id': topic.id}) }}">Voir</a>
                             {% if is_granted('ROLE_ADMIN') or ((topic.users == app.user) and (editLimit[topic.id] == 1)) %}
-                                <a id="user-modif-btn" href="{{ path('topics_edit', {'id': topic.id}) }}" >Modifier</a>
+                                <a class="user-modif-btn" href="{{ path('topics_edit', {'id': topic.id}) }}" >Modifier</a>
                             {% endif %}
+                            <input type="hidden" class="jsEditLimit" name="jsEditLimit" value="{{ topic.date ? topic.date|date('Y-m-d H:i') : '' }}">
+                            <input type="hidden" class="jsAdmin" name="jsAdmin" value="{% if is_granted('ROLE_ADMIN') %} 1 {% else %} 0 {% endif %} ">
+
                             </div>
                         </div>
                     </div>
