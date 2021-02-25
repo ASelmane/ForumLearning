@@ -36,13 +36,7 @@ class TopicsController extends AbstractController
             if($topic->EditLimit()) $editLimit[$id]  = 1 ;
             else $editLimit[$id]  = 0 ;
         
-            $lg_max = 255; // nombre de caractère max
-            $description[$id] = strip_tags($topic->getText()); // On retire toutes les balises
-            if (strlen($description[$id]) > $lg_max) { 
-                $description[$id] = substr($description[$id], 0, $lg_max) ;
-                $last_space = strrpos($description[$id], " ") ;
-                $description[$id] = substr($description[$id], 0, $last_space)."..." ;
-            }
+            $description[$id]= $topic->description();
         }
 
         return $this->render('topics/index.html.twig', [

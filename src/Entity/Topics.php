@@ -190,19 +190,23 @@ class Topics
      * @param Users $user
      * @return boolean
      */
-    public function likeBy(Users $user) : bool 
+    public function likeBy(Users $user) : bool
     {
-        foreach($this->likes as $like) {
-            if ($like->getUser() === $user) return true;
+        foreach ($this->likes as $like) {
+            if ($like->getUser() === $user) {
+                return true;
+            }
         }
 
         return false;
     }
 
-    public function dislikeBy(Users $user) : bool 
+    public function dislikeBy(Users $user) : bool
     {
-        foreach($this->dislikes as $dislike) {
-            if ($dislike->getUser() === $user) return true;
+        foreach ($this->dislikes as $dislike) {
+            if ($dislike->getUser() === $user) {
+                return true;
+            }
         }
         
         return false;
@@ -240,55 +244,71 @@ class Topics
 
     
 
-/**
- * @return Collection|Reports[]
- */
-public function getReports(): Collection
-{
-    return $this->reports;
-}
-
-public function addReport(Reports $report): self
-{
-    if (!$this->reports->contains($report)) {
-        $this->reports[] = $report;
-        $report->setTopic($this);
+    /**
+     * @return Collection|Reports[]
+     */
+    public function getReports(): Collection
+    {
+        return $this->reports;
     }
 
-    return $this;
-}
-
-public function removeReport(Reports $report): self
-{
-    if ($this->reports->removeElement($report)) {
-        // set the owning side to null (unless already changed)
-        if ($report->getTopic() === $this) {
-            $report->setTopic(null);
+    public function addReport(Reports $report): self
+    {
+        if (!$this->reports->contains($report)) {
+            $this->reports[] = $report;
+            $report->setTopic($this);
         }
+
+        return $this;
     }
 
-    return $this;
-}
+    public function removeReport(Reports $report): self
+    {
+        if ($this->reports->removeElement($report)) {
+            // set the owning side to null (unless already changed)
+            if ($report->getTopic() === $this) {
+                $report->setTopic(null);
+            }
+        }
 
-/**
- * Determine si il faut bloquer l'edition, si ça fait +30 min ou si il y a une interaction sur le topic
- *
- * @return boolean
- */
-public function EditLimit() : bool
-{
+        return $this;
+    }
 
-    $topicDate = $this->getDate(); 
-    $date = new DateTime();
-    $date->add(new DateInterval('PT30M'));
-    $likes = $this->getLikes();
-    $dislikes = $this->getDislikes();
-    $commentaires = $this->getCommentaires();
-    $reports = $this->getReports();
+    public function description()
+    {
+        $lg_max = 255; // nombre de caractère max
+        $description = strip_tags($this->getText()); // On retire toutes les balises
+        
+        if (strlen($description) > $lg_max) {
+            $description = substr($description, 0, $lg_max) ;
+            $last_space = strrpos($description, " ") ;
+            $description = substr($description, 0, $last_space)."..." ;
+        }
+        return $description;
+    }
 
-    if((count($likes) === 0)  && (count($dislikes) === 0) && (count($commentaires) === 0) && (count($reports) === 0)) return true;
-    if($topicDate > $date) return true;
+    /**
+     * Determine si il faut bloquer l'edition, si ça fait +30 min ou si il y a une interaction sur le topic
+     *
+     * @return boolean
+     */
+    public function EditLimit() : bool
+    {
+        $topicDate = $this->getDate();
+        $date = new DateTime();
+        $date->add(new DateInterval('PT30M'));
+        $likes = $this->getLikes();
+        $dislikes = $this->getDislikes();
+        $commentaires = $this->getCommentaires();
+        $reports = $this->getReports();
 
-    return false;
-}
+        if ((count($likes) === 0)  && (count($dislikes) === 0) && (count($commentaires) === 0) && (count($reports) === 0)) {
+            return true;
+        }
+        if ($topicDate > $date) {
+            return true;
+        }
+
+        return false;
+    }
 }
