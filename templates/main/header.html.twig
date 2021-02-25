@@ -20,8 +20,8 @@
                   <a class="nav-link d-inline-flex align-items-center mx-xxl-2" href="{{ path('profil') }}"><i class="material-icons pt-lg-1 pt-xxl-0 mr-lg-2 pr-1 pr-xxl-0">account_box</i><span class="d-lg-none  d-xxl-inline-flex">Mon compte</span></a>
                 </li>
               </ul>
-              <form class="form-inline my-2 my-lg-0 mr-lg-1" id="header-search">
-                <input class="form-control mr-sm-2" type="search" placeholder="Chercher un sujet" aria-label="Search" id="search-input">
+              <form name='header-search' method="post" class="form-inline my-2 my-lg-0 mr-lg-1" id="header-search" action="/search">
+                <input class="form-control mr-sm-2" type="search" name="search" placeholder="Chercher un sujet" aria-label="Search" id="search-input">
                 <button class="btn-search btn my-2 my-sm-0 btn-outline-primary d-flex align-items-center justify-content-center" type="submit"><i class="material-icons">search</i></button>
               </form>
               <a href="{{ path('app_logout') }}" class="ml-lg-2 btn btn-primary d-inline-flex align-items-center"><i class="material-icons pr-2 pr-lg-0 pr-xl-2">logout</i><span class="d-lg-none d-xl-inline-flex">Se déconnecter</span></a>
