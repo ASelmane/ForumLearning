@@ -3,6 +3,9 @@
 {% block title %}Liste des Utilisateurs{% endblock %}
 
 {% block body %}
+{% include 'main/header.html.twig' %}
+<div class="container mt-4">
+    <a href="{{ path('dashboard') }}">🠐 Retour au Dashboard</a>
     <h1>Liste des Utilisateurs</h1>
 
     <table class="table">
@@ -32,4 +35,5 @@
         {% endfor %}
         </tbody>
     </table>
+</div>
 {% endblock %}
