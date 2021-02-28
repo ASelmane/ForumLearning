@@ -17,9 +17,9 @@
             {% else %}
             <h1 class="text-uppercase">Dashboard</h1>
             {% endif %}
-            <div class="col-10 d-inline-flex pl-0 align-items-center {% if is_granted('ROLE_ADMIN') %}pt-5 {% endif %}">
+            <div class="col-12 col-md-10 d-inline-flex pl-0 align-items-center pr-2 {% if is_granted('ROLE_ADMIN') %}pt-5 {% endif %}">
                 <h2 class="h5 violet col-6 pl-0">Les derniers topics</h2>
-                <div class="col-8 col-md-10">
+                <div class="col-6 pr-0 text-right">
                     <a class="btn btn-primary d-inline-flex justify-content-end" href="{{ path('topics_new') }}">Créer un nouveau topic</a>
                 </div>
             </div>
